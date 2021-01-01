@@ -1,25 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import NameCard from './NameCard';
+import Papers from './Papers';
+import Career from './Career';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>박봉철 입니다</h1>
+      <NameCard />
+      <h3>주요경력</h3>
+      <Career />
+      <h3>법학논문</h3>
+      <Papers />
     </div>
-  );
+  )
 }
 
 export default App;
