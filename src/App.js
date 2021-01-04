@@ -1,19 +1,17 @@
 import React from 'react';
-import NameCard from './NameCard';
-import Papers from './Papers';
-import Career from './Career';
+import { HashRouter, Route } from 'react-router-dom';
+import About from './routes/About';
+import SGFactor from './routes/SGFactor';
+import Navigation from './components/Navigation';
 
 function App() {
   return (
-    <div>
-      <h1>박봉철 입니다</h1>
-      <NameCard />
-      <h3>주요경력</h3>
-      <Career />
-      <h3>법학논문</h3>
-      <Papers />
-    </div>
-  )
+    <HashRouter>
+      <Navigation />
+      <Route path="/" exact={true} component={About}/>
+      <Route path="/sgfactor" component={SGFactor} />
+    </HashRouter>
+  );
 }
 
 export default App;
