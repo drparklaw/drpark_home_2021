@@ -1,17 +1,20 @@
 {
   "files": {
-    "main.js": "/drpark_home_2021/static/js/main.003289e8.chunk.js",
-    "main.js.map": "/drpark_home_2021/static/js/main.003289e8.chunk.js.map",
+    "main.css": "/drpark_home_2021/static/css/main.d1d3e58d.chunk.css",
+    "main.js": "/drpark_home_2021/static/js/main.88ee0eba.chunk.js",
+    "main.js.map": "/drpark_home_2021/static/js/main.88ee0eba.chunk.js.map",
     "runtime-main.js": "/drpark_home_2021/static/js/runtime-main.1b8970b7.js",
     "runtime-main.js.map": "/drpark_home_2021/static/js/runtime-main.1b8970b7.js.map",
-    "static/js/2.fd407382.chunk.js": "/drpark_home_2021/static/js/2.fd407382.chunk.js",
-    "static/js/2.fd407382.chunk.js.map": "/drpark_home_2021/static/js/2.fd407382.chunk.js.map",
+    "static/js/2.c0e23256.chunk.js": "/drpark_home_2021/static/js/2.c0e23256.chunk.js",
+    "static/js/2.c0e23256.chunk.js.map": "/drpark_home_2021/static/js/2.c0e23256.chunk.js.map",
     "index.html": "/drpark_home_2021/index.html",
-    "static/js/2.fd407382.chunk.js.LICENSE.txt": "/drpark_home_2021/static/js/2.fd407382.chunk.js.LICENSE.txt"
+    "static/css/main.d1d3e58d.chunk.css.map": "/drpark_home_2021/static/css/main.d1d3e58d.chunk.css.map",
+    "static/js/2.c0e23256.chunk.js.LICENSE.txt": "/drpark_home_2021/static/js/2.c0e23256.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.1b8970b7.js",
-    "static/js/2.fd407382.chunk.js",
-    "static/js/main.003289e8.chunk.js"
+    "static/js/2.c0e23256.chunk.js",
+    "static/css/main.d1d3e58d.chunk.css",
+    "static/js/main.88ee0eba.chunk.js"
   ]
 }
