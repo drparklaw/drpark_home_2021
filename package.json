@@ -16,8 +16,10 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "cname": "echo www.drpark.kr > build\\CNAME",
+    "nojekyll": "echo > build\\.nojekyll",
+    "predeploy": "npm run build && npm run cname && npm run nojekyll",
+    "deploy": "gh-pages --add --dotfiles -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -37,5 +39,5 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "https://drparklaw.github.io/drpark_home_2021"
+  "homepage": "/"
 }
