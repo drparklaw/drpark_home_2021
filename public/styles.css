@@ -54,9 +54,6 @@ img {
 	font-style: italic;
 }
 
-.MethodWrapper li {
-	padding: 0.1rem 0;
-}
 
 .MethodWrapper li:after {
 	content: "✼";
