@@ -6,9 +6,9 @@ import Career from '../components/Career';
 function About() {
   return (
     <div>
-      <h3>Career</h3>
+      <h3>주요 경력</h3>
       <Career />
-      <h3>Recent Papers</h3>
+      <h3>법학 논문</h3>
       <Papers />
     </div>
 
