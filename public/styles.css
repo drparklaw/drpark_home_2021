@@ -55,14 +55,14 @@ img {
 }
 
 .MethodWrapper li {
-	padding: 0.4rem 0;
+	padding: 0.1rem 0;
 }
 
 .MethodWrapper li:after {
 	content: "✼";
 	display: block;
 	text-align: center;
-	margin: 1rem 0 0.5rem 0;
+	margin: 0 0 0 0;
 	color: #eee;
 }
 
@@ -89,7 +89,7 @@ img {
 
 	.IntroText {
 		padding: 0.5rem;
-		font-size: 2.5rem;
+		font-size: 2.0rem;
 		text-align: left;
 		position: relative;
 	}
