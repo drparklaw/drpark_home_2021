@@ -4,16 +4,12 @@ import { Link } from 'react-router-dom';
 
 function Navigation() {
 
-    return (<div></div>);
-
-
-        /*
     return (
         <div className="nav">
-            <Link to="/">처음으로</Link>
-            <Link to="/sgfactor">양형인자</Link>
+            <Link to="/">인사말씀</Link>
+            <Link to="/sgfactor">범죄통계</Link>
         </div>
-    );*/
+    );
 }
 
 export default Navigation;

@@ -3,7 +3,7 @@ import { HashRouter, Route } from 'react-router-dom';
 import About from './routes/About';
 import SGFactor from './routes/SGFactor';
 import Navigation from './components/Navigation';
-//import './App.css';
+import './css/styles.css';
 
 function App() {
   return (
