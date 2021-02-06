@@ -17,6 +17,11 @@ function About() {
       <Career />
       <h3>법학 논문</h3>
       <Papers />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
     </div>
 
   );

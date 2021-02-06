@@ -33,6 +33,8 @@ function UnilateralCrime() {
  
             </table>
 
+            <h6>출처: 경찰청(경찰청범죄통계)</h6>
+
         </div>
     );
 }
