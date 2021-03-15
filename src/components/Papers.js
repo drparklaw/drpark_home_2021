@@ -45,6 +45,15 @@ const drpark_papers = [
         institute: '동아대학교 법학연구소 인문사회연구소 지원사업·충북대학교 법학연구소 공동학술대회',
         year: '2020.12',
         page: 'pp.41-54'
+    },
+    {
+        id: 6,
+        name: '박봉철',
+        title: '"공유물의 보존을 위한 소수지분권자의 인도청구"',
+        journal: 'Dong-A Law School Journal 제9권 제2호',
+        institute: '동아법학전문대학원',
+        year: '2021.2',
+        page: 'pp.45-65'
     }
 ]
 
