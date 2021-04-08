@@ -48,7 +48,7 @@ function LegalCode() {
                 <div>
                     <h3>{ codes.name }</h3>
                     <p>{ codes.note }</p>
-                <SyntaxHighlighter language="kotlin" style={docco} showLineNumbers={true} wrapLongLines={true}>
+                <SyntaxHighlighter language="kotlin" style={docco}>
                     { codes.code }
                 </SyntaxHighlighter>
                 </div>
