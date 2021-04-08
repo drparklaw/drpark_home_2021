@@ -8,7 +8,8 @@ const kotlin_codes = [
         id: 1,
         name: `test1`,
         note: `소멸시효`,
-        code: `fun maxOf(a: Int, b: Int): Int {
+        code: `
+        fun maxOf(a: Int, b: Int): Int {
             if (a > b) {
                 return a
             } else {
@@ -20,7 +21,8 @@ const kotlin_codes = [
         id: 2,
         name: `test2`,
         note: `표현대리`,
-        code: `fun printProduct(arg1: String, arg2: String) {
+        code: `
+        fun printProduct(arg1: String, arg2: String) {
             val x = parseInt(arg1)
             val y = parseInt(arg2)
         
