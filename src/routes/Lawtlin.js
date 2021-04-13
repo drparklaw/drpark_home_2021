@@ -10,7 +10,6 @@ function Lawtlin() {
   return (
     <div>
       <Title text="Lawtlin = Law + Kotlin"/>
-      <h3>------ Under Construction ------</h3>
       <LegalCode />
       <br />
       <br />
