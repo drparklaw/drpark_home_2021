@@ -6,7 +6,6 @@ function Navigation() {
     return (
         <div className="nav">
             <Link to="/">인사말씀</Link>
-            <Link to="/sgfactor">범죄통계</Link>
             <Link to="/lawtlin">LAWTLIN</Link>
         </div>
     );
