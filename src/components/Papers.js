@@ -63,6 +63,15 @@ const drpark_papers = [
         institute: '한국국제교육교류학회',
         year: '2021.7',
         page: 'pp.61-80'
+    },
+    {
+        id: 8,
+        name: '박봉철',
+        title: '"수인의 연대채무자에 대한 동시면제"',
+        journal: '아주법학 제15권 제2호',
+        institute: '아주대학교 법학연구소',
+        year: '2021.8',
+        page: 'pp.168-187'
     }
 ]
 
