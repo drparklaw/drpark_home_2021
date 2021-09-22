@@ -9,7 +9,7 @@ import LegalCode from '../components/LegalCode';
 function Lawtlin() {
   return (
     <div>
-      <Title text="Lawtlin = Law + Kotlin"/>
+      <Title text="Legal Programming with Kotlin"/>
       <LegalCode />
       <br />
       <br />
