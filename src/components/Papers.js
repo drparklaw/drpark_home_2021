@@ -72,6 +72,15 @@ const drpark_papers = [
         institute: '아주대학교 법학연구소',
         year: '2021.8',
         page: 'pp.168-187'
+    },
+    {
+        id: 9,
+        name: '박봉철',
+        title: '"일방적인 앱수수료 인상에 관한 민사책임"',
+        journal: '법과사회 제68호',
+        institute: '법과사회이론학회',
+        year: '2021.10',
+        page: 'pp.353-378'
     }
 ]
 
