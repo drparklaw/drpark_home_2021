@@ -81,6 +81,15 @@ const drpark_papers = [
         institute: '법과사회이론학회',
         year: '2021.10',
         page: 'pp.353-378'
+    },
+    {
+        id: 10,
+        name: '박봉철',
+        title: '"인공지능 변호사를 위한 법적 논증의 실제 -연대채무에서 어음채권행사에 따른 소멸시효중단의 절대효-"',
+        journal: '법학논문집 제45호 제3호',
+        institute: '중앙대학교 법학연구원',
+        year: '2021.12',
+        page: 'pp.5-29'
     }
 ]
 
@@ -89,7 +98,7 @@ function Papers() {
 
     return (
         <ol class="MethodWrapper">
-            {drpark_papers.map(paper => (
+            {drpark_papers.slice(0).reverse().map(paper => (
                 <li>{paper.name}, {paper.title}, {paper.journal}, {paper.institute}, {paper.year}, {paper.page}</li>
             ))}
         </ol>
