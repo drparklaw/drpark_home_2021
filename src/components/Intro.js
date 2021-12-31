@@ -5,7 +5,7 @@ import Image from '../components/Image';
 function Intro() {
     return (
         <div class="IntroWrapper">
-            <p class="IntroText">I am developing an A.I. lawyer for Korea based on computational law, predicate logic, and numerical optimization.</p>
+            <p class="IntroText">Given the legal data in Blockchain, I am developing an AI lawyer of South Korea by using predicate logic, fuzzy theory, and other mathematical tools.</p>
             <Image url="drparkPicture.jpg" caption="Picture in 2014" />
         </div>
     );
