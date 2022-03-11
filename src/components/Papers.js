@@ -90,6 +90,15 @@ const drpark_papers = [
         institute: '중앙대학교 법학연구원',
         year: '2021.12',
         page: 'pp.5-29'
+    },
+    {
+        id: 11,
+        name: '박봉철',
+        title: '"공익사업에서 인도청구와 생활보상과의 동시이행관계"',
+        journal: '외법논집 제46권 제1호',
+        institute: '한국외국어대학교 법학연구소',
+        year: '2022.2',
+        page: 'pp.207-234'
     }
 ]
 
