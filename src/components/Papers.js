@@ -40,15 +40,6 @@ const drpark_papers = [
     {
         id: 5,
         name: '박봉철',
-        title: '"인공지능 변호사를 위한 술어논리 기반 추론엔진"',
-        journal: '제4차 산업혁명시대 기술변화에 따른 법적 이슈(발표논문집)',
-        institute: '동아대학교 법학연구소 인문사회연구소 지원사업·충북대학교 법학연구소 공동학술대회',
-        year: '2020.12',
-        page: 'pp.41-54'
-    },
-    {
-        id: 6,
-        name: '박봉철',
         title: '"공유물의 보존을 위한 소수지분권자의 인도청구"',
         journal: 'Dong-A Law School Journal 제9권 제2호',
         institute: '동아법학전문대학원',
@@ -56,7 +47,7 @@ const drpark_papers = [
         page: 'pp.45-65'
     },
     {
-        id: 7,
+        id: 6,
         name: '박봉철',
         title: '"인공지능 변호사를 위한 법리의 구조화와 그 표현"',
         journal: '국제교류와 융합교육 제1권 제1호',
@@ -65,7 +56,7 @@ const drpark_papers = [
         page: 'pp.61-80'
     },
     {
-        id: 8,
+        id: 7,
         name: '박봉철',
         title: '"수인의 연대채무자에 대한 동시면제"',
         journal: '아주법학 제15권 제2호',
@@ -74,7 +65,7 @@ const drpark_papers = [
         page: 'pp.168-187'
     },
     {
-        id: 9,
+        id: 8,
         name: '박봉철',
         title: '"일방적인 앱수수료 인상에 관한 민사책임"',
         journal: '법과사회 제68호',
@@ -83,7 +74,7 @@ const drpark_papers = [
         page: 'pp.353-378'
     },
     {
-        id: 10,
+        id: 9,
         name: '박봉철',
         title: '"인공지능 변호사를 위한 법적 논증의 실제 – 연대채무에서 어음채권행사에 따른 소멸시효중단의 절대효"',
         journal: '법학논문집 제45권 제3호',
@@ -92,13 +83,22 @@ const drpark_papers = [
         page: 'pp.5-29'
     },
     {
-        id: 11,
+        id: 10,
         name: '박봉철',
         title: '"공익사업에서 인도청구와 생활보상과의 동시이행관계"',
         journal: '외법논집 제46권 제1호',
         institute: '한국외국어대학교 법학연구소',
         year: '2022.2',
         page: 'pp.207-234'
+    },
+    {
+        id: 11,
+        name: '박봉철',
+        title: '"4차산업시대에서 술어논리 교과목 도입의 필요성"',
+        journal: '교과와교과서연구 제2권 제1호',
+        institute: '교과와 교과서학회',
+        year: '2022.6',
+        page: 'pp.107-123'
     }
 ]
 
