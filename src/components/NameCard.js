@@ -18,7 +18,7 @@ function NameCard() {
             </tr>
             <tr>
                 <td>
-                <i class="fas fa-location-arrow"></i> 부산 서구 동아대학교 부민캠퍼스 
+                <i class="fas fa-location-arrow"></i> 부산 서구 구덕로225 동아로스쿨 6층 604호
                 </td>
             </tr>
             </table>
