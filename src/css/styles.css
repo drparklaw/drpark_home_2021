@@ -54,6 +54,10 @@ img {
 	font-style: italic;
 }
 
+.emphasis {
+	text-decoration: #e5c046 wavy underline 2px;
+}
+
 
 .MethodWrapper li:after {
 	content: "✼";
