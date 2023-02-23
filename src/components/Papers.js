@@ -99,7 +99,16 @@ const drpark_papers = [
         institute: '교과와 교과서학회',
         year: '2022.6',
         page: 'pp.107-123'
-    }
+    },
+    {
+        id: 12,
+        name: '박봉철',
+        title: '"블록체인 기반 법률데이터 구축 방안 – 가상재화로서의 객체성을 중심으로"',
+        journal: 'Journal of Dong-A Law School 제11권',
+        institute: '동아법학전문대학원',
+        year: '2023.2',
+        page: 'pp.28-47'
+    }    
 ]
 
 
