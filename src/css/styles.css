@@ -55,7 +55,10 @@ img {
 }
 
 .emphasis {
-	text-decoration: #e5c046 wavy underline 2px;
+	background-image: linear-gradient(
+		rgba(0 0 0 / 0) 70%,
+		#e5c046 70%
+	);
 }
 
 
@@ -147,8 +150,8 @@ img {
 
 	.IntroText {
 		padding: 1.5rem;
-		font-size: 2.0rem;
-		text-align: left;
+		font-size: 1.7rem;
+		text-align: justify;
 		position: relative;
 	}
 
