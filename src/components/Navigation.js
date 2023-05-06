@@ -5,8 +5,8 @@ function Navigation() {
 
     return (
         <div className="nav">
-            {/* <Link to="/">인사말씀</Link> */}
-            {/* <Link to="/lawtlin">전산법학</Link> */}
+            <Link to="/">처음으로</Link>
+            <Link to="/new_cases">최신판례</Link>
         </div>
     );
 }
