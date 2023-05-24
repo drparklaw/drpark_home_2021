@@ -4,7 +4,8 @@ import React from 'react';
 function Career() {
 
     return (
-        <ol class="MethodWrapper">
+        /*<ol class="MethodWrapper">*/
+        <ol>
             <li>경남과고/KAIST96학번/동아로스쿨3기</li>
             <li>KAIST 전산학박사(2003~2007)</li>
             <li>삼성종합기술원 전문연구원(2008~2010)</li>
