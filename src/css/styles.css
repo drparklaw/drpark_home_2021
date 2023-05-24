@@ -5,7 +5,7 @@
 body {
 	padding: 1rem 0.5rem;
 	font-size: 1.3rem;
-	line-height: 1.2;
+	line-height: 1.5;
 	max-width: 60rem;
 	margin: 0 auto;
 	color: #333;
@@ -13,6 +13,16 @@ body {
 
 img {
 	max-width: 100%;
+	/*animation: App-logo-spin infinite 20s linear;*/
+}
+
+@keyframes App-logo-spin {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }
 
 .Header {
