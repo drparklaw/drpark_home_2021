@@ -80,7 +80,6 @@ img {
 	color: #eee;
 }
 
-
 .crimeTable table{
 	font-family: arial, sans-serif;
 	border-collapse: collapse;
@@ -112,7 +111,7 @@ img {
 	border-radius: 5px;
 }
 
-@media screen and (max-width: 799px) {
+@media screen and (max-width: 899px) {
     .nav {
         left: initial;
         top: initial;
@@ -137,7 +136,7 @@ img {
 
 
 
-@media screen and (min-width: 800px) {
+@media screen and (min-width: 900px) {
 	body {
 		border-left: 4px solid #f9f9f9;
 		border-right: 4px solid #f9f9f9;
@@ -150,33 +149,32 @@ img {
 		width: 100%;
 	}
 
+
 	.MoneyShot,
 	.IntroText {
 		display: table-cell;
 		width: 50%;
 		vertical-align: middle;
-		text-align: center;
+		text-align: justify;
 	}
 
 	.IntroText {
 		padding: 1.5rem;
-		font-size: 1.7rem;
+		font-size: 1.5rem;
 		text-align: justify;
 		position: relative;
 	}
 
 	.Ingredients {
-		font-size: 0.9rem;
+		font-size: 1.05rem;
 		float: right;
 		padding: 1rem;
 		margin: 0 0 0.5rem 1rem;
 		border-radius: 3px;
-		background-color: #ffffdf;
-		border: 2px solid #e8cfa9;
+		/*background-color: #ffffdf;*/
+		/*border: 2px solid #e8cfa9;*/
 	}
 
-	.Ingredients h3 {
-		margin: 0;
-	}
+	
 
 }
