@@ -4,6 +4,7 @@ import { HashRouter, Route } from 'react-router-dom';
 import About from './routes/About';
 import Lawtlin from './routes/Lawtlin';
 import NewCases from './routes/NewCases';
+import SGFactor from './routes/SGFactor';
 import Navigation from './components/Navigation';
 
 
@@ -13,7 +14,7 @@ function App() {
       <Navigation />
       <Route path="/" exact={true} component={About}/>
       <Route path="/new_cases" component={NewCases}/>
-      <Route path="/lawtlin" component={Lawtlin}/>
+      <Route path="/sgfactor" component={SGFactor}/>
     </HashRouter>
   );
 }
