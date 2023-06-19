@@ -487,7 +487,7 @@ function Cases() {
     return (
         <ul class="MethodWrapper">
             {recent_cases.slice(0).reverse().map(cases => (
-                <li>{cases.kind} {cases.date}, <i>{cases.tag}</i> <p>{cases.content}</p><hr color="#f0f0f0"/></li>
+                <li>{cases.kind} {cases.date}, <i>{cases.tag}</i> <p align="justify">{cases.content}</p></li>
             ))}
         </ul>
     );
