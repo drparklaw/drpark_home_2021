@@ -83,6 +83,14 @@ img {
 }
 
 
+.MethodWrapper2 li:after {
+	content: "✼";
+	display: block;
+	text-align: center;
+	margin: 0 0 0 0;
+	color: #eee;
+}
+
 .MethodWrapper li:after {
 	content: "✼";
 	display: block;
