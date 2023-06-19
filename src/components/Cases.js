@@ -485,7 +485,7 @@ const recent_cases = [
 function Cases() {
 
     return (
-        <ul class="MethodWrapper">
+        <ul class="MethodWrapper2">
             {recent_cases.slice(0).reverse().map(cases => (
                 <li>{cases.kind} {cases.date}, <i>{cases.tag}</i> <p align="justify">{cases.content}</p></li>
             ))}

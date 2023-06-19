@@ -72,17 +72,17 @@ img {
 }
 
 
-.MethodWrapper {
-	list-style-type: none; /* Remove bullets */
-	padding: 0; /* Remove padding */
-	margin: 0; /* Remove margins */
+.MethodWrapper2 {
+	list-style-type: none; 
+	padding: 0; 
+	margin: 0;
 }
 
-.MethodWrapper li:nth-child(even) {
+.MethodWrapper2 li:nth-child(even) {
 	background-color: #dbdbdb;
 }
 
-/*
+
 .MethodWrapper li:after {
 	content: "✼";
 	display: block;
@@ -90,7 +90,7 @@ img {
 	margin: 0 0 0 0;
 	color: #eee;
 }
-*/
+
 
 .crimeTable table{
 	font-family: arial, sans-serif;
