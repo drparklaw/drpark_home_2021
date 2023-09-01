@@ -102,12 +102,21 @@ const drpark_papers = [
     },
     {
         id: 12,
+        name: '박창언·박봉철',
+        title: '"국가교육과정 수립·변경의 법적 구조와 과제"',
+        journal: '교육공동체연구와실천 제5권 제2호',
+        institute: '부산대학교 지역혁신역량교육연구센터',
+        year: '2023.8',
+        page: 'pp.79-98'
+    }, 
+    {
+        id: 13,
         name: '박봉철',
-        title: '"블록체인 기반 법률데이터 구축 방안 – 가상재화로서의 객체성을 중심으로"',
-        journal: 'Journal of Dong-A Law School 제11권',
-        institute: '동아법학전문대학원',
-        year: '2023.2',
-        page: 'pp.28-47'
+        title: '"인공지능 변호사를 위한 법률데이터 구축 방안"',
+        journal: '법학논문집 제47권 제2호',
+        institute: '중앙대학교 법학연구원',
+        year: '2023.8',
+        page: 'pp.43-77'
     }    
 ]
 
