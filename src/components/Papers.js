@@ -117,6 +117,15 @@ const drpark_papers = [
         institute: '중앙대학교 법학연구원',
         year: '2023.8',
         page: 'pp.43-77'
+    },
+    {
+        id: 14,
+        name: '박봉철',
+        title: '"민법 개정에 따른 EU디지털지침 제9조의 도입 방안"',
+        journal: '아주법학 제17권 제2호',
+        institute: '아주대학교 법학연구소',
+        year: '2023.8',
+        page: 'pp.105-132'
     }    
 ]
 
