@@ -126,7 +126,16 @@ const drpark_papers = [
         institute: '아주대학교 법학연구소',
         year: '2023.8',
         page: 'pp.105-132'
-    }    
+    },
+    {
+        id: 15,
+        name: '박봉철',
+        title: '"판례에 따른 유류분 부족액의 계산과 검산"',
+        journal: '홍익법학 제24권 제3호',
+        institute: '홍익대학교 법학연구소',
+        year: '2023.9',
+        page: 'pp.289-320'
+    }        
 ]
 
 
