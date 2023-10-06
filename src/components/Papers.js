@@ -8,7 +8,8 @@ const drpark_papers = [
         journal: '법학연구 제21권 제2호',
         institute: '경상대학교 법학연구소',
         year: '2013.4',
-        page: 'pp.499-527'
+        page: 'pp.499-527',
+        pic: ''
     },
     {
         id: 2,
@@ -17,7 +18,8 @@ const drpark_papers = [
         journal: '동아법학 제88호',
         institute: '동아대학교 법학연구소',
         year: '2020.8',
-        page: 'pp.57-80'
+        page: 'pp.57-80',
+        pic: ''
     },
     {
         id: 3,
@@ -26,7 +28,8 @@ const drpark_papers = [
         journal: '일감부동산법학 제21호',
         institute: '건국대학교 법학연구소',
         year: '2020.8',
-        page: 'pp.231-262'
+        page: 'pp.231-262',
+        pic: '퍼지(2020).png'
     },
     {
         id: 4,
@@ -35,7 +38,8 @@ const drpark_papers = [
         journal: '법학논총 제40권 제3호',
         institute: '전남대학교 법학연구소',
         year: '2020.8',
-        page: 'pp.153-170'
+        page: 'pp.153-170',
+        pic: ''
     },
     {
         id: 5,
@@ -44,7 +48,8 @@ const drpark_papers = [
         journal: 'Dong-A Law School Journal 제9권 제2호',
         institute: '동아법학전문대학원',
         year: '2021.2',
-        page: 'pp.45-65'
+        page: 'pp.45-65',
+        pic: ''
     },
     {
         id: 6,
@@ -53,7 +58,8 @@ const drpark_papers = [
         journal: '국제교류와 융합교육 제1권 제1호',
         institute: '한국국제교육교류학회',
         year: '2021.7',
-        page: 'pp.61-80'
+        page: 'pp.61-80',
+        pic: ''
     },
     {
         id: 7,
@@ -62,7 +68,8 @@ const drpark_papers = [
         journal: '아주법학 제15권 제2호',
         institute: '아주대학교 법학연구소',
         year: '2021.8',
-        page: 'pp.168-187'
+        page: 'pp.168-187',
+        pic: '동시면제(2021).png'
     },
     {
         id: 8,
@@ -71,7 +78,8 @@ const drpark_papers = [
         journal: '법과사회 제68호',
         institute: '법과사회이론학회',
         year: '2021.10',
-        page: 'pp.353-378'
+        page: 'pp.353-378',
+        pic: ''
     },
     {
         id: 9,
@@ -80,7 +88,8 @@ const drpark_papers = [
         journal: '법학논문집 제45권 제3호',
         institute: '중앙대학교 법학연구원',
         year: '2021.12',
-        page: 'pp.5-29'
+        page: 'pp.5-29',
+        pic: '법적논증(2021).png'
     },
     {
         id: 10,
@@ -89,7 +98,8 @@ const drpark_papers = [
         journal: '외법논집 제46권 제1호',
         institute: '한국외국어대학교 법학연구소',
         year: '2022.2',
-        page: 'pp.207-234'
+        page: 'pp.207-234',
+        pic: '공익사업(2022).png'
     },
     {
         id: 11,
@@ -98,7 +108,8 @@ const drpark_papers = [
         journal: '교과와교과서연구 제2권 제1호',
         institute: '교과와 교과서학회',
         year: '2022.6',
-        page: 'pp.107-123'
+        page: 'pp.107-123',
+        pic: ''
     },
     {
         id: 12,
@@ -107,7 +118,8 @@ const drpark_papers = [
         journal: '교육공동체연구와실천 제5권 제2호',
         institute: '부산대학교 지역혁신역량교육연구센터',
         year: '2023.8',
-        page: 'pp.79-98'
+        page: 'pp.79-98',
+        pic: ''
     }, 
     {
         id: 13,
@@ -116,7 +128,8 @@ const drpark_papers = [
         journal: '법학논문집 제47권 제2호',
         institute: '중앙대학교 법학연구원',
         year: '2023.8',
-        page: 'pp.43-77'
+        page: 'pp.43-77',
+        pic: '법률데이터(2023).png'
     },
     {
         id: 14,
@@ -125,7 +138,8 @@ const drpark_papers = [
         journal: '아주법학 제17권 제2호',
         institute: '아주대학교 법학연구소',
         year: '2023.8',
-        page: 'pp.105-132'
+        page: 'pp.105-132',
+        pic: 'EU디지털지침(2023).png'
     },
     {
         id: 15,
@@ -134,7 +148,8 @@ const drpark_papers = [
         journal: '홍익법학 제24권 제3호',
         institute: '홍익대학교 법학연구소',
         year: '2023.9',
-        page: 'pp.289-320'
+        page: 'pp.289-320',
+        pic: '유류분(2023).png'
     }        
 ]
 
@@ -144,7 +159,7 @@ function Papers() {
     return (
         <ol class="MethodWrapper">
             {drpark_papers.slice(0).reverse().map(paper => (
-                <li>{paper.name}, {paper.title}, {paper.journal}, {paper.institute}, {paper.year}, {paper.page}</li>
+                <li>{paper.name}, <a href={paper.pic}>{paper.title}</a>, {paper.journal}, {paper.institute}, {paper.year}, {paper.page}</li>
             ))}
         </ol>
     );
