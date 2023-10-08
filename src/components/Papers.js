@@ -9,7 +9,7 @@ const drpark_papers = [
         institute: '경상대학교 법학연구소',
         year: '2013.4',
         page: 'pp.499-527',
-        pic: ''
+        pic: '휴대폰전자파(2013).png'
     },
     {
         id: 2,
@@ -19,7 +19,7 @@ const drpark_papers = [
         institute: '동아대학교 법학연구소',
         year: '2020.8',
         page: 'pp.57-80',
-        pic: ''
+        pic: '제조물책임(2020).png'
     },
     {
         id: 3,
@@ -39,7 +39,7 @@ const drpark_papers = [
         institute: '전남대학교 법학연구소',
         year: '2020.8',
         page: 'pp.153-170',
-        pic: ''
+        pic: '교과용도서(2020).png'
     },
     {
         id: 5,
@@ -79,7 +79,7 @@ const drpark_papers = [
         institute: '법과사회이론학회',
         year: '2021.10',
         page: 'pp.353-378',
-        pic: ''
+        pic: '인앱결제(2021).png'
     },
     {
         id: 9,
