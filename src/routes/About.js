@@ -6,7 +6,7 @@ import Career from '../components/Career';
 import Softwares from '../components/Software';
 import Books from '../components/Books';
 import Papers from '../components/Papers';
-import Softwares from '../components/Software';
+
 
 
 function About() {
