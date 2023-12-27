@@ -42,16 +42,6 @@ const drpark_papers = [
         pic: '교과용도서(2020).png'
     },
     {
-        id: 5,
-        name: '박봉철',
-        title: '"공유물의 보존을 위한 소수지분권자의 인도청구"',
-        journal: 'Dong-A Law School Journal 제9권 제2호',
-        institute: '동아법학전문대학원',
-        year: '2021.2',
-        page: 'pp.45-65',
-        pic: ''
-    },
-    {
         id: 6,
         name: '박봉철',
         title: '"인공지능 변호사를 위한 법리의 구조화와 그 표현"',
@@ -150,7 +140,17 @@ const drpark_papers = [
         year: '2023.9',
         page: 'pp.289-320',
         pic: '유류분(2023).png'
-    }        
+    },
+    {
+        id: 16,
+        name: '박봉철',
+        title: '"소수지분권자의 위법한 공유물 점유에 관한 판결 유감(遺憾)"',
+        journal: '법조 제72권 제6호',
+        institute: '법조협회',
+        year: '2023.12',
+        page: '',
+        pic: '공유물소수지분권자(2023).png'
+    }               
 ]
 
 
