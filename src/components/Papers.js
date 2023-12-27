@@ -45,7 +45,7 @@ const drpark_papers = [
         id: 6,
         name: '박봉철',
         title: '"인공지능 변호사를 위한 법리의 구조화와 그 표현"',
-        journal: '국제교류와 융합교육 제1권 제1호',
+        journal: '국제교류와융합교육 제1권 제1호',
         institute: '한국국제교육교류학회',
         year: '2021.7',
         page: 'pp.61-80',
