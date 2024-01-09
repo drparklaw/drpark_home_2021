@@ -148,7 +148,7 @@ const drpark_papers = [
         journal: '법조 제72권 제6호',
         institute: '법조협회',
         year: '2023.12',
-        page: 'pp.7-39',
+        page: 'pp.404-433',
         pic: '공유물소수지분권자(2023).png'
     }               
 ]
