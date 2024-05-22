@@ -1,6 +1,6 @@
 import React from 'react';
 
-const drpark_software = [
+const drpark_exam = [
     {
         id: 1,
         name: 'http://dongalaw.org',
@@ -19,15 +19,15 @@ const drpark_software = [
 
 
 
-function Softwares() {
+function Exam() {
 
     return (
         <ol class="MethodWrapper">
-            {drpark_software.slice(0).reverse().map(sw => (
+            {drpark_exam.slice(0).reverse().map(sw => (
                 <li>{sw.name}, {sw.title}, {sw.publisher}, {sw.year}</li>
             ))}
         </ol>
     );
 }
 
-export default Softwares;
+export default Exam;

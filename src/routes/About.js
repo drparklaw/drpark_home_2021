@@ -3,7 +3,7 @@ import Title from '../components/Title';
 import Intro from '../components/Intro';
 import NameCard from '../components/NameCard';
 import Career from '../components/Career';
-import Softwares from '../components/Software';
+import Softwares from '../components/Exam';
 import Books from '../components/Books';
 import Papers from '../components/Papers';
 
@@ -21,7 +21,7 @@ function About() {
       <h3>주요 이력</h3>
       <Career />
       <h3>법학 수험</h3>
-      <Softwares />
+      <Exam />
       <h3>법학 저서</h3>
       <Books />
       <h3>법학 논문</h3>
