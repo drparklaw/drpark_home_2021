@@ -12,7 +12,7 @@ const drpark_software = [
         id: 2,
         name: '법무부',
         title: '"제13회 변호사시험 시험위원"',
-        publisher: '(채점위원)',
+        publisher: '채점위원',
         year: '2024.2'
     }
 ]
