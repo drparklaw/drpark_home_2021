@@ -3,7 +3,7 @@ import Title from '../components/Title';
 import Intro from '../components/Intro';
 import NameCard from '../components/NameCard';
 import Career from '../components/Career';
-import Softwares from '../components/Exam';
+import Exam from '../components/Exam';
 import Books from '../components/Books';
 import Papers from '../components/Papers';
 
