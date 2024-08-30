@@ -5,7 +5,7 @@ import Cases from '../components/Cases';
 function NewCases() {
     return(
     <div>
-        <Title text="최신 판례"/>
+        <Title text="Latest Cases"/>
         <Cases />
         <hr color="#f0f0f0" />
     </div>);

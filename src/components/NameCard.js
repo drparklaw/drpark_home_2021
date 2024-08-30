@@ -8,7 +8,7 @@ function NameCard() {
             <table>
             <tr>
                 <td>
-                <i class="fas fa-phone"></i> 051-200-8513
+                <i class="fas fa-phone"></i> +82-51-200-8513
                 </td>
             </tr>
             <tr>
@@ -18,7 +18,7 @@ function NameCard() {
             </tr>
             <tr>
                 <td>
-                <i class="fas fa-location-arrow"></i> (49236)부산 서구 구덕로225 동아로스쿨 6층 604호
+                <i class="fas fa-location-arrow"></i> Room 604, Law School, 225 Gudeok-ro, Seo-gu, Busan
                 </td>
             </tr>
             </table>

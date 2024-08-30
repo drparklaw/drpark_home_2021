@@ -4,16 +4,16 @@ const drpark_exam = [
     {
         id: 1,
         name: 'http://dongalaw.org',
-        title: '"동아로스쿨 내신 CBT 시스템"',
-        publisher: '노트북용(Mac호환)',
-        year: '2023.11'
+        title: '"Dong-A Law School Internal CBT System"',
+        publisher: 'for Laptops (Mac Compatible)',
+        year: 'November 2023'
     },
     {
         id: 2,
-        name: '법무부',
-        title: '"제13회 변호사시험 시험위원"',
-        publisher: '채점위원',
-        year: '2024.2'
+        name: 'Ministry of Justice',
+        title: '"13th Bar Exam Committee Member"',
+        publisher: 'Grading Committee',
+        year: 'February 2024'
     }
 ]
 
@@ -23,8 +23,8 @@ function Exam() {
 
     return (
         <ol class="MethodWrapper">
-            {drpark_exam.slice(0).reverse().map(sw => (
-                <li>{sw.name}, {sw.title}, {sw.publisher}, {sw.year}</li>
+            {drpark_exam.slice(0).reverse().map(ex => (
+                <li>{ex.name}, {ex.title}, {ex.publisher}, {ex.year}</li>
             ))}
         </ol>
     );
