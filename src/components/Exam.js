@@ -5,7 +5,7 @@ const drpark_exam = [
         id: 1,
         name: 'http://dongalaw.org',
         title: '"Dong-A Law School Internal CBT System"',
-        publisher: 'for Laptops (Mac Compatible)',
+        publisher: 'for Laptops (Mac compatible)',
         year: 'November 2023'
     },
     {
