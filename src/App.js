@@ -10,12 +10,13 @@ import Navigation from './components/Navigation';
 
 function App() {
   return (
-    <HashRouter>
-      <Navigation />
-      <Route path="/" exact={true} component={About}/>
-      <Route path="/new_cases" component={NewCases}/>
-      <Route path="/sgfactor" component={SGFactor}/>
-    </HashRouter>
+    // <HashRouter>
+    //   <Navigation />
+    //   <Route path="/" exact={true} component={About}/>
+    //   <Route path="/new_cases" component={NewCases}/>
+    //   <Route path="/sgfactor" component={SGFactor}/>
+    // </HashRouter>
+    <About />
   );
 }
 
