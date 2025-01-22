@@ -20,9 +20,9 @@ function About() {
       <a href="https://hits.seeyoufarm.com"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fdrpark.kr&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/></a>
       <h3>Profile</h3>
       <Career />
-      <h3>Related to the Bar Exam</h3>
+      <h3>Bar Exam Contributions</h3>
       <Exam />
-      <h3>Papers (Korean)</h3>
+      <h3>Legal Articles (Korean)</h3>
       <Papers />
       <br />
       <br />
