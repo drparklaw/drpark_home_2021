@@ -18,7 +18,7 @@ function NameCard() {
             </tr>
             <tr>
                 <td>
-                <i class="fas fa-location-arrow"></i> Room 604, Law School, 225 Gudeok-ro, Seo-gu, Busan
+                <i class="fas fa-location-arrow"></i> #604, Law School Bldg. 225 Gudeokro, Seogu, Busan
                 </td>
             </tr>
             </table>
