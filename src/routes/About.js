@@ -6,6 +6,7 @@ import Career from '../components/Career';
 import Exam from '../components/Exam';
 import Books from '../components/Books';
 import Papers from '../components/Papers';
+import Industry from '../components/Industry';
 
 
 
@@ -20,6 +21,8 @@ function About() {
 
       <h3>Profile</h3>
       <Career />
+      <h3>Industry Project</h3>
+      <Industry />
       <h3>Bar Exam Contributions</h3>
       <Exam />
       <h3>Legal Articles (Korean)</h3>
