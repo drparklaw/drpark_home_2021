@@ -177,7 +177,8 @@ const drpark_papers = [
 function Papers() {
 
     return (
-        <ol class="MethodWrapper">
+        /*<ol class="MethodWrapper">*/
+        <ol>
             {drpark_papers.slice(0).reverse().map(paper => (
                 <li>{paper.name}, <a href={paper.pic}>{paper.title}</a>, {paper.journal}, {paper.institute}, {paper.year}, {paper.page}</li>
             ))}

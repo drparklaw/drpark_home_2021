@@ -26,7 +26,7 @@ const drpark_industry = [
 function Industry() {
 
     return (
-        <ol class="MethodWrapper">
+        <ol>
             {drpark_industry.slice(0).reverse().map(proj => (
                 <li>{proj.name}, {proj.title}, {proj.period}, <a href={proj.link}>{proj.supporter}</a></li>
             ))}

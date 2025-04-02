@@ -4,16 +4,16 @@ const drpark_exam = [
     {
         id: 1,
         name: 'http://dongalaw.org',
-        title: '"Dong-A Law School Internal CBT System"',
-        publisher: 'for Laptops (Mac compatible)',
-        year: 'November 2023'
+        title: '"Dong-A Law School CBT System"',
+        publisher: 'for Laptops(Mac compatible)',
+        year: '2023.11.'
     },
     {
         id: 2,
         name: 'Ministry of Justice',
         title: '"13th Bar Exam Committee Member"',
         publisher: 'Grading Committee',
-        year: 'February 2024'
+        year: '2024.2.'
     }
 ]
 
@@ -22,7 +22,7 @@ const drpark_exam = [
 function Exam() {
 
     return (
-        <ol class="MethodWrapper">
+        <ol>
             {drpark_exam.slice(0).reverse().map(ex => (
                 <li>{ex.name}, {ex.title}, {ex.publisher}, {ex.year}</li>
             ))}
