@@ -8,8 +8,8 @@ function Career() {
         <ul>
             <li>KAIST BS(EE&CS), MS(EE), and PhD(CS)</li>
             <li>Senior Researcher, Samsung</li>
-            <li>Managing Attorney, Dr. Park Law Office</li>
-            <li>Associate Professor, Dong-A Univ. Law School (Present)</li>
+            <li>Attorney, Dr. Park Law Office</li>
+            <li>Associate Prof., Dong-A Univ. Law School (Present)</li>
             <li>Arbitrator, Korean Commercial Arbitration Board (Present)</li>
         </ul>); 
 }
