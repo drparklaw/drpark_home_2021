@@ -21,7 +21,7 @@ function About() {
 
       <h3>Profile</h3>
       <Career />
-      <h3>Industry Project</h3>
+      <h3>Industry Projects</h3>
       <Industry />
       <h3>Bar Exam Contributions</h3>
       <Exam />
