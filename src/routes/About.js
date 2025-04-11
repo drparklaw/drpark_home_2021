@@ -14,7 +14,7 @@ function About() {
   return (
 
     <div>
-      <Title text="Hello, I'm Bongcheol Park."/>
+      <Title text="Bongcheol Park | Ph.D."/>
       <Intro />
 
       <NameCard />
