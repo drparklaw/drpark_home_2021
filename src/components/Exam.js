@@ -14,6 +14,13 @@ const drpark_exam = [
         title: '"13th Bar Exam Committee Member"',
         publisher: 'Grading Committee',
         year: '2024.2.'
+    },
+    {
+        id: 3,
+        name: 'Ministry of Justice',
+        title: '"14th Bar Exam Committee Member"',
+        publisher: 'Drafting Committee',
+        year: '2025.1.'
     }
 ]
 
