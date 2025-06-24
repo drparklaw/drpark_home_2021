@@ -1,28 +1,32 @@
 import React, { useEffect, useState } from 'react';
 
 const VisitorCounter = () => {
-  const [today, setToday] = useState('?');
-  const [total, setTotal] = useState('?');
+  const [today, setToday] = useState(null);
+  const [total, setTotal] = useState(null);
 
   useEffect(() => {
-    const fetchCounts = async () => {
+    const fetchData = async () => {
       try {
         const response = await fetch('https://visit-counter.drparklaw.workers.dev/api/visit');
         const data = await response.json();
-        setToday(data.today);   // <- 여기서 숫자가 들어가야 함
+        console.log("Fetched visitor data:", data);  // 디버깅용
+        setToday(data.today);
         setTotal(data.total);
-        console.log('Visit data:', data);
       } catch (error) {
-        console.error('Visitor count fetch failed:', error);
+        console.error('Fetch error:', error);
       }
     };
 
-    fetchCounts();
+    fetchData();
   }, []);
 
   return (
-    <div style={{ fontSize: '14px', textAlign: 'center', marginTop: '20px' }}>
-      <strong>Today:</strong> {today} / <strong>Total:</strong> {total}
+    <div style={{ fontSize: '0.9rem', marginTop: '10px' }}>
+      {today !== null && total !== null ? (
+        <span>Today: {today} / Total: {total}</span>
+      ) : (
+        <span>Loading...</span>  // 또는 아무것도 안 보여줘도 됩니다
+      )}
     </div>
   );
 };
