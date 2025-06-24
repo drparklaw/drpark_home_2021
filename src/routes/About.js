@@ -7,6 +7,7 @@ import Exam from '../components/Exam';
 import Books from '../components/Books';
 import Papers from '../components/Papers';
 import Industry from '../components/Industry';
+import VisitorCounter from '../components/VisitorCounter';
 
 
 
@@ -18,7 +19,7 @@ function About() {
       <Intro />
 
       <NameCard />
-
+      <VisitorCounter />
       <h3>Profile</h3>
       <Career />
       <h3>Industry Projects</h3>
