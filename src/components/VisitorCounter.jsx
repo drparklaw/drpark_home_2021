@@ -1,43 +1,44 @@
 import React, { useEffect, useState } from "react";
 
 const VisitorCounter = () => {
-  const [countData, setCountData] = useState(null); // ✅ 여기가 중요!
+  const [countData, setCountData] = useState(null);
+  const [error, setError] = useState(null);
 
- useEffect(() => {
-  const fetchCounts = async () => {
-    try {
-      console.log("Fetching visitor count...");
-      const res = await fetch("https://visit-counter.drparklaw.workers.dev/api/visit");
-      const text = await res.text();
-      console.log("Raw text data:", text);
+  useEffect(() => {
+    const fetchCounts = async () => {
+      try {
+        const response = await fetch("https://visit-counter.drparklaw.workers.dev/api/visit");
+        if (!response.ok) throw new Error("Network response was not ok");
 
-      const dailyMatch = text.match(/Today.*?:\s*(\d+)/);
-      const totalMatch = text.match(/Total:\s*(\d+)/);
+        const text = await response.text();
 
-      const daily = dailyMatch ? parseInt(dailyMatch[1], 10) : 0;
-      const total = totalMatch ? parseInt(totalMatch[1], 10) : 0;
+        const dailyMatch = text.match(/Today.*?:\s*(\d+)/);
+        const totalMatch = text.match(/Total:\s*(\d+)/);
 
-      console.log("Parsed counts:", { daily, total });
+        const daily = dailyMatch ? parseInt(dailyMatch[1], 10) : 0;
+        const total = totalMatch ? parseInt(totalMatch[1], 10) : 0;
 
-      setCountData({ daily, total });
-    } catch (err) {
-      console.error("Fetch error:", err);
-    }
-  };
+        setCountData({ daily, total });
+      } catch (err) {
+        console.error("Fetch error:", err);
+        setError("방문자 수를 불러올 수 없습니다.");
+      }
+    };
 
-  fetchCounts();
-}, []);
+    fetchCounts();
+  }, []);
 
   return (
     <div>
+      {error && <p style={{ color: "red" }}>{error}</p>}
       {countData ? (
         <div>
           <p>Today: {countData.daily}</p>
           <p>Total: {countData.total}</p>
         </div>
-      ) : (
+      ) : !error ? (
         <p>Loading...</p>
-      )}
+      ) : null}
     </div>
   );
 };
