@@ -28,28 +28,30 @@ const VisitorCounter = () => {
     fetchCounts();
   }, []);
 
-  return (
-    <div style={{
-      fontFamily: "system-ui, sans-serif",
-      fontSize: "14px",
-      color: "#333",
-      padding: "12px 16px",
-      border: "1px solid #e0e0e0",
-      borderRadius: "6px",
-      maxWidth: "240px"
-    }}>
-      {error ? (
-        <p style={{ color: "#e53935" }}>{error}</p>
-      ) : countData ? (
-        <>
-          <p style={{ margin: "2px 0" }}>Today : <strong>{countData.daily}</strong></p>
-          <p style={{ margin: "2px 0" }}>Total : <strong>{countData.total}</strong></p>
-        </>
-      ) : (
-        <p style={{ color: "#aaa" }}>Loading...</p>
-      )}
-    </div>
-  );
+ return (
+  <div style={{
+    fontFamily: "system-ui, sans-serif",
+    fontSize: "14px",
+    color: "#333",
+    padding: "6px 10px",
+    border: "1px solid #e0e0e0",
+    borderRadius: "6px",
+    display: "inline-block",       // ✅ 글 길이에 맞게
+    lineHeight: "1.4",
+    backgroundColor: "#f9f9f9"     // (선택) 살짝 톤을 넣으면 더 자연스러움
+  }}>
+    {error ? (
+      <p style={{ color: "#e53935", margin: 0 }}>{error}</p>
+    ) : countData ? (
+      <>
+        <p style={{ margin: "2px 0" }}>Today: <strong>{countData.daily}</strong></p>
+        <p style={{ margin: "2px 0" }}>Total: <strong>{countData.total}</strong></p>
+      </>
+    ) : (
+      <p style={{ color: "#aaa", margin: 0 }}>Loading...</p>
+    )}
+  </div>
+);
 };
 
 export default VisitorCounter;
