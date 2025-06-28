@@ -16,10 +16,11 @@ function About() {
 
     <div>
       <Title text="Bongcheol Park | Ph.D."/>
-      <Intro />
 
+      <Intro />
       <NameCard />
       <VisitorCounter />
+
       <h3>Profile</h3>
       <Career />
       <h3>Industry Projects</h3>
