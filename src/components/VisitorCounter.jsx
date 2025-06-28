@@ -1,31 +1,42 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 const VisitorCounter = () => {
-  const [today, setToday] = useState(null);
-  const [total, setTotal] = useState(null);
+  const [countData, setCountData] = useState(null); // ✅ 여기가 중요!
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch('https://visit-counter.drparklaw.workers.dev/api/visit');
-        const data = await response.json();
-        console.log("Fetched visitor data:", data);  // 디버깅용
-        setToday(data.today);
-        setTotal(data.total);
-      } catch (error) {
-        console.error('Fetch error:', error);
-      }
-    };
+ useEffect(() => {
+  const fetchCounts = async () => {
+    try {
+      console.log("Fetching visitor count...");
+      const res = await fetch("https://visit-counter.drparklaw.workers.dev/api/visit");
+      const text = await res.text();
+      console.log("Raw text data:", text);
 
-    fetchData();
-  }, []);
+      const dailyMatch = text.match(/Today.*?:\s*(\d+)/);
+      const totalMatch = text.match(/Total:\s*(\d+)/);
+
+      const daily = dailyMatch ? parseInt(dailyMatch[1], 10) : 0;
+      const total = totalMatch ? parseInt(totalMatch[1], 10) : 0;
+
+      console.log("Parsed counts:", { daily, total });
+
+      setCountData({ daily, total });
+    } catch (err) {
+      console.error("Fetch error:", err);
+    }
+  };
+
+  fetchCounts();
+}, []);
 
   return (
-    <div style={{ fontSize: '0.9rem', marginTop: '10px' }}>
-      {today !== null && total !== null ? (
-        <span>Today: {today} / Total: {total}</span>
+    <div>
+      {countData ? (
+        <div>
+          <p>Today: {countData.daily}</p>
+          <p>Total: {countData.total}</p>
+        </div>
       ) : (
-        <span>Loading...</span>  // 또는 아무것도 안 보여줘도 됩니다
+        <p>Loading...</p>
       )}
     </div>
   );
