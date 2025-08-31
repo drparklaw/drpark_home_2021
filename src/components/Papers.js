@@ -170,7 +170,17 @@ const drpark_papers = [
         year: '2025.1',
         page: 'pp.201-232',
         pic: ''
-    }                   
+    },
+    {
+        id: 19,
+        name: '박봉철',
+        title: '"EU 인공지능법에 따른 AI 교과서의 조건"',
+        journal: '국제교류와융합교육 제5권 제2호',
+        institute: '한국국제교육교류학회',
+        year: '2025.8',
+        page: 'pp.285-305',
+        pic: ''
+    }                
 ]
 
 
