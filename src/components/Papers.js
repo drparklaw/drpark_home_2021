@@ -186,7 +186,7 @@ const drpark_papers = [
         name: '박봉철',
         title: '"초등 국정도서 운영에 나타난 공교육정사화법상 학교장의 책무 위반과 민법상 불법행위 책임"',
         journal: '교과와교과서연구 제5권 제2호',
-        institute: '교과와교과서학회,
+        institute: '교과와교과서학회',
         year: '2025.12',
         page: 'pp.167-187',
         pic: ''
