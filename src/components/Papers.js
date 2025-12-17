@@ -42,7 +42,7 @@ const drpark_papers = [
         pic: '교과용도서(2020).png'
     },
     {
-        id: 6,
+        id: 5,
         name: '박봉철',
         title: '"인공지능 변호사를 위한 법리의 구조화와 그 표현"',
         journal: '국제교류와융합교육 제1권 제1호',
@@ -52,7 +52,7 @@ const drpark_papers = [
         pic: ''
     },
     {
-        id: 7,
+        id: 6,
         name: '박봉철',
         title: '"수인의 연대채무자에 대한 동시면제"',
         journal: '아주법학 제15권 제2호',
@@ -62,7 +62,7 @@ const drpark_papers = [
         pic: '동시면제(2021).png'
     },
     {
-        id: 8,
+        id: 7,
         name: '박봉철',
         title: '"일방적인 앱수수료 인상에 관한 민사책임"',
         journal: '법과사회 제68호',
@@ -72,7 +72,7 @@ const drpark_papers = [
         pic: '인앱결제(2021).png'
     },
     {
-        id: 9,
+        id: 8,
         name: '박봉철',
         title: '"인공지능 변호사를 위한 법적 논증의 실제 – 연대채무에서 어음채권행사에 따른 소멸시효중단의 절대효"',
         journal: '법학논문집 제45권 제3호',
@@ -82,7 +82,7 @@ const drpark_papers = [
         pic: '법적논증(2021).png'
     },
     {
-        id: 10,
+        id: 9,
         name: '박봉철',
         title: '"공익사업에서 인도청구와 생활보상과의 동시이행관계"',
         journal: '외법논집 제46권 제1호',
@@ -92,7 +92,7 @@ const drpark_papers = [
         pic: '공익사업(2022).png'
     },
     {
-        id: 11,
+        id: 10,
         name: '박봉철',
         title: '"4차산업시대에서 술어논리 교과목 도입의 필요성"',
         journal: '교과와교과서연구 제2권 제1호',
@@ -102,7 +102,7 @@ const drpark_papers = [
         pic: ''
     },
     {
-        id: 12,
+        id: 11,
         name: '박창언·박봉철',
         title: '"국가교육과정 수립·변경의 법적 구조와 과제"',
         journal: '교육공동체연구와실천 제5권 제2호',
@@ -112,7 +112,7 @@ const drpark_papers = [
         pic: ''
     }, 
     {
-        id: 13,
+        id: 12,
         name: '박봉철',
         title: '"인공지능 변호사를 위한 법률데이터 구축 방안"',
         journal: '법학논문집 제47권 제2호',
@@ -122,7 +122,7 @@ const drpark_papers = [
         pic: '법률데이터(2023).png'
     },
     {
-        id: 14,
+        id: 13,
         name: '박봉철',
         title: '"민법 개정에 따른 EU디지털지침 제9조의 도입 방안"',
         journal: '아주법학 제17권 제2호',
@@ -132,7 +132,7 @@ const drpark_papers = [
         pic: 'EU디지털지침(2023).png'
     },
     {
-        id: 15,
+        id: 14,
         name: '박봉철',
         title: '"판례에 따른 유류분 부족액의 계산과 검산"',
         journal: '홍익법학 제24권 제3호',
@@ -142,7 +142,7 @@ const drpark_papers = [
         pic: '유류분(2023).png'
     },
     {
-        id: 16,
+        id: 15,
         name: '박봉철',
         title: '"소수지분권자의 위법한 공유물 점유에 관한 판결 유감(遺憾) – 대법원 2020. 9. 7. 선고 2017다204810 판결의 소개"',
         journal: '법조 제72권 제6호',
@@ -152,7 +152,7 @@ const drpark_papers = [
         pic: '공유물소수지분권자(2023).png'
     },
     {
-        id: 17,
+        id: 16,
         name: '차이양간·박봉철',
         title: '"중국 ｢민법전｣상 법정구조제도에 대한 실무와 쟁점 분석"',
         journal: '동아법학 제104호',
@@ -162,7 +162,7 @@ const drpark_papers = [
         pic: ''
     },
     {
-        id: 18,
+        id: 17,
         name: '사위연·박봉철',
         title: '"중국내 의료손해 사법감정의견에 대한 교호신문의 한계와 그 개선 방안"',
         journal: '국제거래와법 제48호',
@@ -172,7 +172,7 @@ const drpark_papers = [
         pic: ''
     },
     {
-        id: 19,
+        id: 18,
         name: '박봉철',
         title: '"EU 인공지능법에 따른 AI 교과서의 조건"',
         journal: '국제교류와융합교육 제5권 제2호',
@@ -182,7 +182,7 @@ const drpark_papers = [
         pic: ''
     },
     {
-        id: 20,
+        id: 19,
         name: '박봉철',
         title: '"초등 국정도서 운영에 나타난 공교육정상화법상 학교장의 책무 위반과 민법상 불법행위 책임"',
         journal: '교과와교과서연구 제5권 제2호',
