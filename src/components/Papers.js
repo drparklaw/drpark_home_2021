@@ -179,7 +179,7 @@ const drpark_papers = [
         institute: '한국국제교육교류학회',
         year: '2025.8',
         page: 'pp.285-305',
-        pic: ''
+        pic: 'AI교과서(2025).png'
     },
     {
         id: 19,
@@ -189,7 +189,7 @@ const drpark_papers = [
         institute: '교과와교과서학회',
         year: '2025.12',
         page: 'pp.167-187',
-        pic: ''
+        pic: '학교장의책무(2025).png'
     }                       
 ]
 
