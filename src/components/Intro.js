@@ -5,7 +5,7 @@ import Image from '../components/Image';
 function Intro() {
     return (
         <div class="IntroWrapper">
-            <p class="IntroText">Welcome! I'm a professor at Dong-A University Law School. My academic focus is on Korean Civil Law, with a particular interest in the evolving field of computational law and legal data analysis. Wishing you a great day!</p>
+            <p class="IntroText">Welcome! I’m a professor at Dong-A University Law School. While my teaching expertise lies in Korean Civil Law, I am deeply engaged in research regarding legal data and computational law. Have a wonderful day!</p>
             <Image url="drpark_png.png" caption="What truly is logic? ..." />
         </div>
     );
