@@ -205,6 +205,15 @@ img {
 		/*border: 2px solid #e8cfa9;*/
 	}
 
-	
+
+	.Ingredients2 {
+		font-size: 1.3rem;
+		float: left;
+		padding: 1rem;
+		border-radius: 3px;
+		background-color: #ffffdf;
+		border: 2px solid #e8cfa9;
+	}
+
 
 }

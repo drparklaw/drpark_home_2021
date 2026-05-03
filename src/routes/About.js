@@ -18,7 +18,11 @@ function About() {
       <Title text="Bongcheol Park | Ph.D."/>
 
       <Intro />
-      <NameCard />
+
+
+      {/*
+       <NameCard /> */}
+       
       <VisitorCounter />
 
       <h3>Profile</h3>
