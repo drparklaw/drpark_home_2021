@@ -4,8 +4,7 @@ import Image from '../components/Image';
 function Intro() {
     return (
         <div className="IntroWrapper">
-            <p className="IntroText">Welcome! I am a professor at Dong-A University Law School. My teaching focuses on Korean Civil Law, and my research interests include legal data and computational law.<br />When I entered law school in 2011, I made a promise: to merge engineering and law and create new frontiers.
-I am now living that promise—and it makes me truly happy.
+            <p className="IntroText">Welcome! I am a professor at Dong-A University Law School. My teaching focuses on Korean Civil Law, and my research interests include legal data and computational law.<br />By giving legal content an engineering form, I aim to make the law more accessible—because it must be understood before it can be followed.
    
       <br />
       <br />

@@ -185,13 +185,13 @@ img {
 		display: table-cell;
 		width: 50%;
 		vertical-align: middle;
-		text-align: justify;
+		text-align: left;
 	}
 
 	.IntroText {
 		padding: 1.5rem;
 		font-size: 1.5rem;
-		text-align: justify;
+		text-align: left;
 		position: relative;
 	}
 
