@@ -5,8 +5,7 @@ function Intro() {
     return (
         <div className="IntroWrapper">
             <p className="IntroText">Welcome! I am a professor at Dong-A University Law School. My teaching focuses on Korean Civil Law, and my research interests include legal data and computational law.<br />By giving legal content an engineering form, I aim to make the law more accessible—because it must be understood before it can be followed.
-   
-      <br />
+
       <br />
 
         <div class="Ingredients2">
