@@ -1,13 +1,13 @@
 import React from 'react';
 import Title from '../components/Title';
 import Intro from '../components/Intro';
-import NameCard from '../components/NameCard';
+//import NameCard from '../components/NameCard';
 import Career from '../components/Career';
 import Exam from '../components/Exam';
-import Books from '../components/Books';
+//import Books from '../components/Books';
 import Papers from '../components/Papers';
 import Industry from '../components/Industry';
-import VisitorCounter from '../components/VisitorCounter';
+//import VisitorCounter from '../components/VisitorCounter';
 
 
 
@@ -23,7 +23,9 @@ function About() {
       {/*
        <NameCard /> */}
        
-      <VisitorCounter />
+
+            {/*
+             <VisitorCounter /> */}
 
       <h3>Profile</h3>
       <Career />

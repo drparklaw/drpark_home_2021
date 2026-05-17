@@ -1,10 +1,28 @@
 import React from 'react';
+import VisitorCounter from './VisitorCounter';
 
-function Title(props) {
+function Title({ text }) {
+
     return (
-        <div class="Header">
-            <h2>{props.text}</h2>
-        </div>
+        <header className="Header">
+
+            <div className="HeaderTopRow">
+
+                <h1 className="HeaderTitle">
+                    {text}
+                </h1>
+
+                <div className="HeaderCounter">
+                    <VisitorCounter />
+                </div>
+
+            </div>
+
+            <p className="Strap">
+                Korean Civil Law · Legal Data · Computational Law
+            </p>
+
+        </header>
     );
 }
 
