@@ -7,7 +7,7 @@ function Navigation() {
             <Link to="/">Home</Link>
 
             <Link to="/legal_dictionary">
-                법률용어사전
+                법률용어검색
             </Link>
         </div>
     );
