@@ -270,8 +270,8 @@ export default function BarPassPredictor() {
       
       {/* UI PANEL */}
       <aside style={sidebarStyle}>
-        <h2 style={{ fontSize: "1.4rem", fontWeight: "800", marginBottom: "5px", color: "#4DA3FF" }}>변호사시험 합격 분석</h2>
-        <p style={{ fontSize: "0.85rem", color: "#888", marginBottom: "25px" }}>객관식 점수기반 시뮬레이션</p>
+        <h2 style={{ fontSize: "1.4rem", fontWeight: "800", marginBottom: "5px", color: "#4DA3FF" }}>변호사 시험 합격 분석</h2>
+        <p style={{ fontSize: "0.85rem", color: "#888", marginBottom: "25px" }}>객관식 점수 기반 시뮬레이션</p>
         
         <div style={{ display: "flex", flexDirection: "column", gap: "15px" }}>
           <InputGroup label="공법 (max 40)" value={inputs.gong} onChange={v => setInputs({...inputs, gong: v})} />
