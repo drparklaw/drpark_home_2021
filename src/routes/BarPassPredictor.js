@@ -24,7 +24,7 @@ function invert3x3(m) {
   const D = f * g - d * i, E = a * i - c * g, F = c * d - a * f;
   const G = d * h - e * g, H = b * g - a * h, I = a * e - b * d;
   const det = a * A + b * D + c * G || 1e-6;
-  return [[A/det, B/det, C/det], [D/det, E/det, F/det], [G/det, H/det, I/det]];
+  return [[A/det, B/det, C/det], [D/det, E/det, f/det], [G/det, H/det, I/det]];
 }
 
 function computeStats(points) {
@@ -104,9 +104,9 @@ function Ellipsoid({ data, isPass, color }) {
         color={color} 
         wireframe 
         transparent 
-        opacity={0.25} 
+        opacity={0.15} 
         emissive={color} 
-        emissiveIntensity={0.5} 
+        emissiveIntensity={0.3} 
       />
     </mesh>
   );
@@ -138,7 +138,7 @@ export default function BarPassPredictor() {
     let advice = "";
     
     if (prob >= 0.9) {
-      advice = "이미 합격 안정권입니다! 현재의 밸런스를 잘 유지하세요.";
+      advice = "합격 안정권입니다! 현재 균형을 잘 유지하세요.";
     } else {
       const needed = TARGET_LOGIT - logit;
       const potential = current.map((v, i) => Math.max(0, MAX_SCORES[i] - v));
@@ -146,32 +146,32 @@ export default function BarPassPredictor() {
       const totalEffort = effortWeights.reduce((a, b) => a + b, 0);
 
       if (totalEffort <= 0) {
-        advice = "모든 과목이 만점 수준입니다. 주관식 시험에 집중하세요.";
+        advice = "객관식 점수가 이미 최상위권입니다. 주관식 시험에 집중하세요.";
       } else {
         const diffs = effortWeights.map((ew, i) => (needed * (ew / totalEffort)) / w[i]);
-        advice = `[공법: +${diffs[0].toFixed(1)}, 형법: +${diffs[1].toFixed(1)}, 민법: +${diffs[2].toFixed(1)}] 문항 추가 득점 시 90% 안정권에 진입합니다.`;
+        advice = `[공법: +${diffs[0].toFixed(1)}, 형법: +${diffs[1].toFixed(1)}, 민법: +${diffs[2].toFixed(1)}] 개 추가 득점 시 90% 안정권 진입!`;
       }
     }
     setResult({ prob, advice, customPoint: current });
   };
 
-  if (!data) return <div style={loadingStyle}>데이터 분석 중...</div>;
+  if (!data) return <div style={loadingStyle}>분석 모델 준비 중...</div>;
 
   return (
     <div style={rootContainer}>
       <div style={appWrapper}>
         <header style={headerPanel}>
           <div style={titleArea}>
-            <h2 style={titleText}>변시합격 확률예측 (DALS)</h2>
+            <h2 style={titleText}>변시 합격 확률 <span style={{color:'#00FF7F'}}>DALS</span></h2>
             {result.prob !== null && (
-              <div style={{...probBadge, borderColor: result.prob > 0.8 ? '#00FF7F' : '#FF3030', color: result.prob > 0.8 ? '#00FF7F' : '#FF3030'}}>
+              <div style={{...probBadge, borderColor: result.prob > 0.8 ? '#00FF7F' : '#FF1A1A', color: result.prob > 0.8 ? '#00FF7F' : '#FF1A1A'}}>
                 {(result.prob * 100).toFixed(1)}%
               </div>
             )}
           </div>
           
           <div style={inputGrid}>
-            {[["공법", "gong", 40], ["형법", "hyung", 40], ["민법", "min", 70]].map(([label, key, max]) => (
+            {[["공법", "gong"], ["형법", "hyung"], ["민법", "min"]].map(([label, key]) => (
               <div key={key} style={inputGroup}>
                 <label style={labelStyle}>{label}</label>
                 <input type="number" value={inputs[key]} onChange={e => setInputs({...inputs, [key]: e.target.value})} style={inputStyle} />
@@ -182,29 +182,35 @@ export default function BarPassPredictor() {
 
           {result.advice && (
             <div style={adviceBox}>
-              <div style={{fontWeight:'bold', color:'#4DA3FF', marginBottom:'4px'}}>📊 현실적 최적 경로</div>
-              <div style={{fontSize:'0.85rem', color:'#fff'}}>{result.advice}</div>
+              <div style={{fontWeight:'bold', color:'#4DA3FF', marginBottom:'2px', fontSize:'0.75rem'}}>🎯 추천 전략</div>
+              <div style={{fontSize:'0.8rem', color:'#fff', fontWeight:'500'}}>{result.advice}</div>
             </div>
           )}
         </header>
 
         <main style={{flex: 1, position:'relative'}}>
+          {/* 상단 슬림 범례 (모바일 최적화) */}
+          <div style={topLegendBar}>
+            <div style={legendItem}><div style={dot('#00FF7F')}/> 합격군</div>
+            <div style={legendItem}><div style={dot('#007FFF')}/> 불합격군</div>
+            <div style={legendItem}><div style={{...dot('#FF0000'), boxShadow:'0 0 12px #FF0000'}}/> 내 위치</div>
+          </div>
+
           <Canvas dpr={[1, 2]} camera={{ position: [110, 90, 130], fov: 35 }}>
             <Suspense fallback={null}>
               <color attach="background" args={["#000000"]} />
-              <ambientLight intensity={0.8} />
-              <pointLight position={[60, 60, 60]} intensity={2} />
+              <ambientLight intensity={0.5} />
+              <pointLight position={[100, 100, 100]} intensity={2} />
               
-              <gridHelper args={[120, 12, "#333", "#222"]} position={[20, 0, 35]} />
+              <gridHelper args={[120, 12, "#222", "#222"]} position={[25, 0, 35]} />
               
-              {/* 데이터 포인트: 불투명도 100%로 선명하게 */}
               {data.map((d, i) => (
                 <mesh key={i} position={[d.XGC, d.XHC, d.XMC]}>
-                  <sphereGeometry args={[0.35, 12, 12]} />
+                  <sphereGeometry args={[0.3, 8, 8]} />
                   <meshStandardMaterial 
                     color={d.pass === 1 ? "#00FF7F" : "#007FFF"} 
                     emissive={d.pass === 1 ? "#00FF7F" : "#007FFF"}
-                    emissiveIntensity={0.4}
+                    emissiveIntensity={0.2}
                   />
                 </mesh>
               ))}
@@ -212,25 +218,25 @@ export default function BarPassPredictor() {
               <Ellipsoid data={data} isPass={true} color="#00FF7F" />
               <Ellipsoid data={data} isPass={false} color="#007FFF" />
 
-              {/* 내 위치: 강력한 붉은 광원 효과 */}
+              {/* 내 위치: 순수 Red 강조 */}
               {result.customPoint && (
                 <group position={result.customPoint}>
                   <mesh>
                     <sphereGeometry args={[1.8, 32, 32]} />
-                    <meshStandardMaterial color="#FF0000" emissive="#FF0000" emissiveIntensity={6} />
+                    {/* emissiveIntensity를 대폭 높여 번쩍이는 빨간색 구현 */}
+                    <meshStandardMaterial 
+                      color="#FF0000" 
+                      emissive="#FF0000" 
+                      emissiveIntensity={15} 
+                      toneMapped={false} 
+                    />
                   </mesh>
-                  <pointLight color="#FF0000" intensity={10} distance={50} />
+                  <pointLight color="#FF0000" intensity={20} distance={60} />
                 </group>
               )}
               <OrbitControls target={[25, 15, 35]} />
             </Suspense>
           </Canvas>
-          
-          <div style={legendOverlay}>
-            <div style={legendItem}><div style={dot('#00FF7F')}/> 합격군 (Target)</div>
-            <div style={legendItem}><div style={dot('#007FFF')}/> 불합격군</div>
-            <div style={legendItem}><div style={{...dot('#FF0000'), boxShadow:'0 0 10px #FF0000'}}/> 현재 내 위치</div>
-          </div>
         </main>
       </div>
     </div>
@@ -238,21 +244,37 @@ export default function BarPassPredictor() {
 }
 
 /* =========================
-   STYLING (SHARPER)
+   STYLING
 ========================= */
 const rootContainer = { width: "100vw", height: "100vh", background: "#000", display: "flex", justifyContent: "center", overflow: "hidden" };
-const appWrapper = { width: "100%", maxWidth: "900px", display: "flex", flexDirection: "column", background: "#000" };
-const headerPanel = { padding: "20px", background: "rgba(20,20,20,0.95)", borderBottom: "2px solid #333", zIndex: 10 };
-const titleArea = { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "15px" };
-const titleText = { margin: 0, fontSize: "1.2rem", color: "#fff", fontWeight: "900", letterSpacing: "1px" };
-const probBadge = { padding: "6px 16px", background: "#000", borderRadius: "20px", border: "2px solid", fontWeight: "900", fontSize: "1rem" };
-const inputGrid = { display: "flex", gap: "12px", alignItems: "flex-end" };
-const inputGroup = { flex: 1, display: "flex", flexDirection: "column", gap: "5px" };
-const labelStyle = { fontSize: "0.7rem", color: "#aaa", fontWeight: "bold", textAlign: "center" };
-const inputStyle = { width: "100%", padding: "12px 0", background: "#111", border: "1px solid #444", color: "#fff", textAlign: "center", borderRadius: "8px", fontSize: "1rem", outline: "none" };
-const analyzeBtn = { padding: "12px 24px", background: "#00FF7F", color: "#000", border: "none", borderRadius: "8px", fontWeight: "bold", cursor: "pointer", fontSize: "1rem" };
-const adviceBox = { marginTop: "15px", padding: "15px", background: "#1a1a1a", borderRadius: "10px", border: "1px solid #444", boxShadow: "inset 0 0 10px rgba(0,0,0,0.5)" };
-const legendOverlay = { position: "absolute", bottom: "30px", right: "30px", background: "rgba(0,0,0,0.85)", padding: "15px", borderRadius: "12px", border: "1px solid #444" };
-const legendItem = { display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px', color: '#eee', fontSize: '0.75rem' };
-const dot = (color) => ({ width: "10px", height: "10px", borderRadius: "50%", background: color });
-const loadingStyle = { height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#00FF7F", background: "#000", fontSize: "1.2rem", fontWeight: "bold" };
+const appWrapper = { width: "100%", maxWidth: "600px", display: "flex", flexDirection: "column", background: "#000" };
+const headerPanel = { padding: "15px", background: "rgba(20,20,20,0.98)", borderBottom: "1px solid #333", zIndex: 10 };
+const titleArea = { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "12px" };
+const titleText = { margin: 0, fontSize: "1.1rem", color: "#fff", fontWeight: "900" };
+const probBadge = { padding: "4px 12px", background: "#000", borderRadius: "15px", border: "2px solid", fontWeight: "900", fontSize: "0.9rem" };
+const inputGrid = { display: "flex", gap: "8px", alignItems: "flex-end" };
+const inputGroup = { flex: 1, display: "flex", flexDirection: "column", gap: "3px" };
+const labelStyle = { fontSize: "0.65rem", color: "#888", fontWeight: "bold", textAlign: "center" };
+const inputStyle = { width: "100%", padding: "10px 0", background: "#111", border: "1px solid #444", color: "#fff", textAlign: "center", borderRadius: "6px", fontSize: "0.9rem", outline: "none" };
+const analyzeBtn = { padding: "10px 15px", background: "#00FF7F", color: "#000", border: "none", borderRadius: "6px", fontWeight: "bold", cursor: "pointer", fontSize: "0.9rem" };
+const adviceBox = { marginTop: "10px", padding: "10px", background: "#111", borderRadius: "8px", border: "1px solid #333" };
+
+// 상단 슬림 범례 스타일
+const topLegendBar = { 
+  position: "absolute", 
+  top: "15px", 
+  left: "50%", 
+  transform: "translateX(-50%)", 
+  display: "flex", 
+  gap: "15px", 
+  background: "rgba(0,0,0,0.7)", 
+  padding: "6px 15px", 
+  borderRadius: "20px", 
+  border: "1px solid #444", 
+  zIndex: 5,
+  whiteSpace: "nowrap"
+};
+const legendItem = { display: 'flex', alignItems: 'center', gap: '6px', color: '#eee', fontSize: '0.7rem', fontWeight: 'bold' };
+const dot = (color) => ({ width: "8px", height: "8px", borderRadius: "50%", background: color });
+
+const loadingStyle = { height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#00FF7F", background: "#000", fontWeight: "bold" };
