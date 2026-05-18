@@ -4,7 +4,7 @@ import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 
 /* =========================
-   STATISTICS & LOGIC (강화된 분석 로직)
+   STATISTICS & LOGIC (최종 강화 버전)
 ========================= */
 const MAX_SCORES = [40, 40, 70]; 
 
@@ -44,7 +44,7 @@ function computeStats(points) {
   }
   for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 3; j++) cov[i][j] = cov[i][j] / (n - 1);
-    cov[i][i] += 0.5; // 안정성 향상
+    cov[i][i] += 0.5; 
   }
   return { mean, cov };
 }
@@ -56,11 +56,9 @@ function solveRealisticModel(data, current) {
   const s1 = computeStats(p1);
   const pooledCov = s0.cov.map((row, i) => row.map((val, j) => (val + s1.cov[i][j]) / 2));
   const invCov = invert3x3(pooledCov);
-  
   let w = mul(invCov, vecSub(s1.mean, s0.mean)).map(v => Math.max(v, 0.08)); 
   const midPoint = s0.mean.map((v, i) => (v + s1.mean[i]) / 2);
   const b = -vecDot(w, midPoint);
-  
   const logitScale = 0.5; 
   const logit = (vecDot(w, current) + b) * logitScale;
   const prob = 1 / (1 + Math.exp(-logit));
@@ -131,19 +129,16 @@ export default function BarPassPredictor() {
 
   const handleAnalyze = () => {
     if (!data) return;
-
     const clamp = (val, min, max) => Math.max(min, Math.min(max, val));
     const vGong = clamp(Number(inputs.gong), 0, 40);
     const vHyung = clamp(Number(inputs.hyung), 0, 40);
     const vMin = clamp(Number(inputs.min), 0, 70);
-
     setInputs({ gong: vGong.toString(), hyung: vHyung.toString(), min: vMin.toString() });
 
     const current = [vGong, vHyung, vMin];
     const { w, b, prob, logitScale } = solveRealisticModel(data, current);
 
-    // --- 강화된 조언 알고리즘 ---
-    const TARGET_PROB = 0.90; // 목표 90%
+    const TARGET_PROB = 0.90; 
     const TARGET_LOGIT = Math.log(TARGET_PROB / (1 - TARGET_PROB)) / logitScale; 
     let advice = "";
     
@@ -152,28 +147,18 @@ export default function BarPassPredictor() {
     } else {
       const currentLogit = vecDot(w, current) + b;
       const needed = TARGET_LOGIT - currentLogit;
-      
-      // 가중치: 통계적 중요도 * 부족한 만큼의 비중 (불균형 보정)
-      const potential = current.map((v, i) => MAX_SCORES[i] - v);
       const effortWeights = w.map((weight, i) => {
           const lackRatio = (MAX_SCORES[i] - current[i]) / MAX_SCORES[i];
-          return weight * (0.5 + lackRatio); // 부족한 과목에 더 높은 가중치
+          return weight * (0.5 + lackRatio); 
       });
-      
       const totalEffort = effortWeights.reduce((a, b) => a + b, 0);
       const rawDiffs = effortWeights.map((ew, i) => (needed * (ew / totalEffort)) / w[i]);
-
       const formatted = rawDiffs.map((d, i) => {
         const maxPossible = MAX_SCORES[i] - current[i];
         let finalD = Math.min(d, maxPossible);
-        
-        // 90% 미만인데 조언이 너무 낮게 나오는 것 방지 (최소 조언 보정)
-        if (prob < TARGET_PROB && finalD < 0.5 && maxPossible > 1) {
-            finalD = 1.0; 
-        }
+        if (prob < TARGET_PROB && finalD < 0.5 && maxPossible > 1) { finalD = 1.0; }
         return finalD >= 0.5 ? `+${finalD.toFixed(1)}` : "유지";
       });
-
       advice = `[공법: ${formatted[0]}, 형사: ${formatted[1]}, 민사: ${formatted[2]}] 보완 시 합격 확률 90% 안정권 진입이 가능합니다.`;
     }
     setResult({ prob, advice, customPoint: current });
@@ -198,7 +183,7 @@ export default function BarPassPredictor() {
           </div>
           
           <div style={inputGrid}>
-            {[["공법개수(40)", "gong"], ["형사개수(40)", "hyung"], ["민사개수(70)", "min"]].map(([label, key]) => (
+            {[["공법 개수(40)", "gong"], ["형사법 개수(40)", "hyung"], ["민사법 개수(70)", "min"]].map(([label, key]) => (
               <div key={key} style={inputGroup}>
                 <label style={labelStyle}>{label}</label>
                 <input type="number" value={inputs[key]} onChange={e => setInputs({...inputs, [key]: e.target.value})} style={inputStyle} />
@@ -216,10 +201,11 @@ export default function BarPassPredictor() {
         </header>
 
         <main style={{flex: 1, position:'relative'}}>
+          {/* 모바일 최적화 한 줄 범례 */}
           <div style={topLegendBar}>
             <div style={legendItem}><div style={dot('#00FF7F')}/> 합격군</div>
             <div style={legendItem}><div style={dot('#007FFF')}/> 불합격군</div>
-            <div style={legendItem}><div style={{...dot('#FF0000'), boxShadow:'0 0 15px #FF0000'}}/> 내 위치</div>
+            <div style={legendItem}><div style={{...dot('#FF0000'), boxShadow:'0 0 10px #FF0000'}}/> 내 위치</div>
           </div>
 
           <Canvas dpr={[1, 2]} camera={{ position: [110, 90, 130], fov: 32 }}>
@@ -263,7 +249,7 @@ export default function BarPassPredictor() {
 }
 
 /* =========================
-   STYLING
+   STYLING (모바일 최적화 수정)
 ========================= */
 const rootContainer = { width: "100vw", height: "100vh", background: "#000", display: "flex", justifyContent: "center", overflow: "hidden" };
 const appWrapper = { width: "100%", maxWidth: "600px", display: "flex", flexDirection: "column", background: "#000" };
@@ -277,7 +263,35 @@ const labelStyle = { fontSize: "0.65rem", color: "#aaa", fontWeight: "700", text
 const inputStyle = { width: "100%", padding: "12px 0", background: "#111", border: "1px solid #444", color: "#fff", textAlign: "center", borderRadius: "8px", fontSize: "1rem", outline: "none" };
 const analyzeBtn = { padding: "12px 15px", background: "#00FF7F", color: "#000", border: "none", borderRadius: "8px", fontWeight: "900", cursor: "pointer" };
 const adviceBox = { marginTop: "12px", padding: "12px", background: "#0a0a0a", borderRadius: "10px", border: "1px solid #333" };
-const topLegendBar = { position: "absolute", top: "15px", left: "50%", transform: "translateX(-50%)", display: "flex", gap: "15px", background: "rgba(0,0,0,0.8)", padding: "8px 18px", borderRadius: "30px", border: "1px solid #444", zIndex: 5 };
-const legendItem = { display: 'flex', alignItems: 'center', gap: '8px', color: '#fff', fontSize: '0.7rem', fontWeight: 'bold' };
-const dot = (color) => ({ width: "9px", height: "9px", borderRadius: "50%", background: color });
+
+// 범례 스타일: 모바일에서 한 줄로 나오도록 수정
+const topLegendBar = { 
+  position: "absolute", 
+  top: "15px", 
+  left: "50%", 
+  transform: "translateX(-50%)", 
+  display: "flex", 
+  flexWrap: "nowrap", // 줄바꿈 금지
+  gap: "10px", // 간격 축소
+  background: "rgba(0,0,0,0.85)", 
+  padding: "6px 14px", 
+  borderRadius: "30px", 
+  border: "1px solid #444", 
+  zIndex: 5,
+  width: "auto",
+  maxWidth: "95vw", // 화면 밖으로 나가지 않게
+  justifyContent: "center"
+};
+
+const legendItem = { 
+  display: 'flex', 
+  alignItems: 'center', 
+  gap: '5px', // 간격 축소
+  color: '#fff', 
+  fontSize: '0.65rem', // 모바일 가독성을 위해 살짝 조절
+  fontWeight: 'bold',
+  whiteSpace: 'nowrap' // 텍스트 줄바꿈 방지
+};
+
+const dot = (color) => ({ width: "8px", height: "8px", borderRadius: "50%", background: color });
 const loadingStyle = { height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#00FF7F", background: "#000", fontWeight: "bold" };
