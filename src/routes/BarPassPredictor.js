@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, Center } from "@react-three/drei";
 import * as THREE from "three";
 
 /* =========================
-   STATISTICS & LOGIC
+   STATISTICS & LOGIC (기존 로직 보존)
 ========================= */
 const MAX_SCORES = [40, 40, 70]; 
 
@@ -66,7 +66,7 @@ function solveRealisticModel(data, current) {
 }
 
 /* =========================
-   3D SHAPES (더 선명하게 조정)
+   3D SHAPES
 ========================= */
 const CHI95 = 7.815;
 function eigen3(A) {
@@ -183,7 +183,7 @@ export default function BarPassPredictor() {
           </div>
           
           <div style={inputGrid}>
-            {[["공법 개수(40)", "gong"], ["형사법 개수(40)", "hyung"], ["민사법 개수(70)", "min"]].map(([label, key]) => (
+            {[["공법(40)", "gong"], ["형사(40)", "hyung"], ["민사(70)", "min"]].map(([label, key]) => (
               <div key={key} style={inputGroup}>
                 <label style={labelStyle}>{label}</label>
                 <input type="number" value={inputs[key]} onChange={e => setInputs({...inputs, [key]: e.target.value})} style={inputStyle} />
@@ -195,53 +195,62 @@ export default function BarPassPredictor() {
           {result.advice && (
             <div style={adviceBox}>
               <div style={{fontWeight:'900', color:'#4DA3FF', marginBottom:'4px', fontSize:'0.75rem'}}>🚀 90% 달성 전략</div>
-              <div style={{fontSize:'0.85rem', color:'#eee', lineHeight:'1.4'}}>{result.advice}</div>
+              <div style={{fontSize:'0.82rem', color:'#eee', lineHeight:'1.4'}}>{result.advice}</div>
             </div>
           )}
         </header>
 
-        <main style={{flex: 1, position:'relative'}}>
+        <main style={{ flex: 1, position: 'relative', width: '100%', overflow: 'hidden' }}>
           <div style={topLegendBar}>
             <div style={legendItem}><div style={dot('#00FF7F')}/> 합격군</div>
             <div style={legendItem}><div style={dot('#007FFF')}/> 불합격군</div>
             <div style={legendItem}><div style={{...dot('#FF0000'), boxShadow:'0 0 10px #FF0000'}}/> 내 위치</div>
           </div>
 
-          <Canvas dpr={[1, 2]} camera={{ position: [110, 90, 130], fov: 32 }}>
+          <Canvas 
+            dpr={[1, 2]} 
+            camera={{ position: [110, 90, 130], fov: 32 }}
+            style={{ width: '100%', height: '100%', touchAction: 'none' }}
+          >
             <Suspense fallback={null}>
               <color attach="background" args={["#000"]} />
               <ambientLight intensity={0.8} />
               <pointLight position={[100, 100, 100]} intensity={3} />
               
-              {/* 좌표 메쉬(그리드) 선명하게 수정 */}
-              <gridHelper args={[140, 14, "#888", "#444"]} position={[25, 0, 35]} />
-              
-              {data.map((d, i) => (
-                <mesh key={i} position={[d.XGC, d.XHC, d.XMC]}>
-                  <sphereGeometry args={[0.4, 8, 8]} />
-                  <meshStandardMaterial 
-                    color={d.pass === 1 ? "#00FF7F" : "#007FFF"} 
-                    emissive={d.pass === 1 ? "#00FF7F" : "#007FFF"}
-                    emissiveIntensity={0.8} // 선명한 발광
-                    transparent={false} // 불투명하게 변경하여 더 또렷하게
-                    opacity={1}
-                  />
-                </mesh>
-              ))}
+              {/* Center를 통해 전체 데이터 뭉치를 캔버스 중앙에 물리적으로 배치 */}
+              <Center top>
+                <group>
+                  <gridHelper args={[140, 14, "#888", "#444"]} position={[25, 0, 35]} />
+                  
+                  {data.map((d, i) => (
+                    <mesh key={i} position={[d.XGC, d.XHC, d.XMC]}>
+                      <sphereGeometry args={[0.4, 8, 8]} />
+                      <meshStandardMaterial 
+                        color={d.pass === 1 ? "#00FF7F" : "#007FFF"} 
+                        emissive={d.pass === 1 ? "#00FF7F" : "#007FFF"}
+                        emissiveIntensity={0.8}
+                        transparent={false}
+                        opacity={1}
+                      />
+                    </mesh>
+                  ))}
 
-              <Ellipsoid data={data} isPass={true} color="#00FF7F" />
-              <Ellipsoid data={data} isPass={false} color="#007FFF" />
+                  <Ellipsoid data={data} isPass={true} color="#00FF7F" />
+                  <Ellipsoid data={data} isPass={false} color="#007FFF" />
 
-              {result.customPoint && (
-                <group position={result.customPoint}>
-                  <mesh>
-                    <sphereGeometry args={[2.0, 32, 32]} />
-                    <meshStandardMaterial color="#FF0000" emissive="#FF0000" emissiveIntensity={20} toneMapped={false} />
-                  </mesh>
-                  <pointLight color="#FF0000" intensity={30} distance={70} />
+                  {result.customPoint && (
+                    <group position={result.customPoint}>
+                      <mesh>
+                        <sphereGeometry args={[2.0, 32, 32]} />
+                        <meshStandardMaterial color="#FF0000" emissive="#FF0000" emissiveIntensity={20} toneMapped={false} />
+                      </mesh>
+                      <pointLight color="#FF0000" intensity={30} distance={70} />
+                    </group>
+                  )}
                 </group>
-              )}
-              <OrbitControls target={[25, 15, 35]} makeDefault />
+              </Center>
+
+              <OrbitControls target={[25, 15, 35]} makeDefault enablePan={false} />
             </Suspense>
           </Canvas>
         </main>
@@ -251,10 +260,27 @@ export default function BarPassPredictor() {
 }
 
 /* =========================
-   STYLING
+   STYLING (반응형 최적화)
 ========================= */
-const rootContainer = { width: "100vw", height: "100vh", background: "#000", display: "flex", justifyContent: "center", overflow: "hidden" };
-const appWrapper = { width: "100%", maxWidth: "600px", display: "flex", flexDirection: "column", background: "#000" };
+const rootContainer = { 
+  width: "100vw", 
+  height: "100dvh", // 모바일 주소창 대응
+  background: "#000", 
+  display: "flex", 
+  justifyContent: "center", 
+  overflow: "hidden" 
+};
+
+const appWrapper = { 
+  width: "100%", 
+  maxWidth: "600px", 
+  height: "100%", 
+  display: "flex", 
+  flexDirection: "column", 
+  background: "#000",
+  position: "relative"
+};
+
 const headerPanel = { padding: "18px", background: "rgba(10,10,10,0.98)", borderBottom: "1px solid #333", zIndex: 10 };
 const titleArea = { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "15px" };
 const titleText = { margin: 0, fontSize: "1.2rem", color: "#fff", fontWeight: "900" };
@@ -284,4 +310,4 @@ const topLegendBar = {
 
 const legendItem = { display: 'flex', alignItems: 'center', gap: '6px', color: '#fff', fontSize: '0.7rem', fontWeight: 'bold', whiteSpace: 'nowrap' };
 const dot = (color) => ({ width: "10px", height: "10px", borderRadius: "50%", background: color });
-const loadingStyle = { height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#00FF7F", background: "#000", fontWeight: "900", fontSize: "1.2rem" };
+const loadingStyle = { height: "100dvh", display: "flex", alignItems: "center", justifyContent: "center", color: "#00FF7F", background: "#000", fontWeight: "900", fontSize: "1.2rem" };
