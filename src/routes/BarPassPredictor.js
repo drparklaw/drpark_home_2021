@@ -4,7 +4,7 @@ import { OrbitControls } from "@react-three/drei";
 import * as THREE from "three";
 
 /* =========================
-   STATISTICS & LOGIC (최종 강화 버전)
+   STATISTICS & LOGIC
 ========================= */
 const MAX_SCORES = [40, 40, 70]; 
 
@@ -66,7 +66,7 @@ function solveRealisticModel(data, current) {
 }
 
 /* =========================
-   3D SHAPES
+   3D SHAPES (더 선명하게 조정)
 ========================= */
 const CHI95 = 7.815;
 function eigen3(A) {
@@ -107,7 +107,7 @@ function Ellipsoid({ data, isPass, color }) {
   return (
     <mesh position={shape.mean} scale={shape.scale} quaternion={shape.quaternion}>
       <sphereGeometry args={[1, 32, 32]} />
-      <meshStandardMaterial color={color} wireframe transparent opacity={0.12} emissive={color} emissiveIntensity={0.2} />
+      <meshStandardMaterial color={color} wireframe transparent opacity={0.15} emissive={color} emissiveIntensity={0.5} />
     </mesh>
   );
 }
@@ -164,7 +164,7 @@ export default function BarPassPredictor() {
     setResult({ prob, advice, customPoint: current });
   };
 
-  if (!data) return <div style={loadingStyle}>모델 데이터를 불러오는 중...</div>;
+  if (!data) return <div style={loadingStyle}>분석 모델 최적화 중...</div>;
 
   return (
     <div style={rootContainer}>
@@ -201,7 +201,6 @@ export default function BarPassPredictor() {
         </header>
 
         <main style={{flex: 1, position:'relative'}}>
-          {/* 모바일 최적화 한 줄 범례 */}
           <div style={topLegendBar}>
             <div style={legendItem}><div style={dot('#00FF7F')}/> 합격군</div>
             <div style={legendItem}><div style={dot('#007FFF')}/> 불합격군</div>
@@ -211,18 +210,21 @@ export default function BarPassPredictor() {
           <Canvas dpr={[1, 2]} camera={{ position: [110, 90, 130], fov: 32 }}>
             <Suspense fallback={null}>
               <color attach="background" args={["#000"]} />
-              <ambientLight intensity={0.6} />
-              <pointLight position={[100, 100, 100]} intensity={2.5} />
-              <gridHelper args={[120, 12, "#333", "#222"]} position={[25, 0, 35]} />
+              <ambientLight intensity={0.8} />
+              <pointLight position={[100, 100, 100]} intensity={3} />
+              
+              {/* 좌표 메쉬(그리드) 선명하게 수정 */}
+              <gridHelper args={[140, 14, "#888", "#444"]} position={[25, 0, 35]} />
               
               {data.map((d, i) => (
                 <mesh key={i} position={[d.XGC, d.XHC, d.XMC]}>
-                  <sphereGeometry args={[0.3, 8, 8]} />
+                  <sphereGeometry args={[0.4, 8, 8]} />
                   <meshStandardMaterial 
                     color={d.pass === 1 ? "#00FF7F" : "#007FFF"} 
                     emissive={d.pass === 1 ? "#00FF7F" : "#007FFF"}
-                    emissiveIntensity={0.3}
-                    transparent opacity={0.6}
+                    emissiveIntensity={0.8} // 선명한 발광
+                    transparent={false} // 불투명하게 변경하여 더 또렷하게
+                    opacity={1}
                   />
                 </mesh>
               ))}
@@ -233,10 +235,10 @@ export default function BarPassPredictor() {
               {result.customPoint && (
                 <group position={result.customPoint}>
                   <mesh>
-                    <sphereGeometry args={[1.8, 32, 32]} />
-                    <meshStandardMaterial color="#FF0000" emissive="#FF0000" emissiveIntensity={15} toneMapped={false} />
+                    <sphereGeometry args={[2.0, 32, 32]} />
+                    <meshStandardMaterial color="#FF0000" emissive="#FF0000" emissiveIntensity={20} toneMapped={false} />
                   </mesh>
-                  <pointLight color="#FF0000" intensity={20} distance={60} />
+                  <pointLight color="#FF0000" intensity={30} distance={70} />
                 </group>
               )}
               <OrbitControls target={[25, 15, 35]} makeDefault />
@@ -249,49 +251,37 @@ export default function BarPassPredictor() {
 }
 
 /* =========================
-   STYLING (모바일 최적화 수정)
+   STYLING
 ========================= */
 const rootContainer = { width: "100vw", height: "100vh", background: "#000", display: "flex", justifyContent: "center", overflow: "hidden" };
 const appWrapper = { width: "100%", maxWidth: "600px", display: "flex", flexDirection: "column", background: "#000" };
-const headerPanel = { padding: "18px", background: "rgba(15,15,15,0.95)", borderBottom: "1px solid #333", zIndex: 10 };
+const headerPanel = { padding: "18px", background: "rgba(10,10,10,0.98)", borderBottom: "1px solid #333", zIndex: 10 };
 const titleArea = { display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "15px" };
 const titleText = { margin: 0, fontSize: "1.2rem", color: "#fff", fontWeight: "900" };
 const probBadge = { padding: "5px 15px", background: "#000", borderRadius: "20px", border: "2px solid", fontWeight: "900", fontSize: "0.95rem" };
 const inputGrid = { display: "flex", gap: "8px", alignItems: "flex-end" };
 const inputGroup = { flex: 1, display: "flex", flexDirection: "column", gap: "4px" };
 const labelStyle = { fontSize: "0.65rem", color: "#aaa", fontWeight: "700", textAlign: "center" };
-const inputStyle = { width: "100%", padding: "12px 0", background: "#111", border: "1px solid #444", color: "#fff", textAlign: "center", borderRadius: "8px", fontSize: "1rem", outline: "none" };
+const inputStyle = { width: "100%", padding: "12px 0", background: "#1a1a1a", border: "1px solid #444", color: "#fff", textAlign: "center", borderRadius: "8px", fontSize: "1rem", outline: "none", fontWeight: "bold" };
 const analyzeBtn = { padding: "12px 15px", background: "#00FF7F", color: "#000", border: "none", borderRadius: "8px", fontWeight: "900", cursor: "pointer" };
-const adviceBox = { marginTop: "12px", padding: "12px", background: "#0a0a0a", borderRadius: "10px", border: "1px solid #333" };
+const adviceBox = { marginTop: "12px", padding: "12px", background: "#050505", borderRadius: "10px", border: "1px solid #222" };
 
-// 범례 스타일: 모바일에서 한 줄로 나오도록 수정
 const topLegendBar = { 
   position: "absolute", 
   top: "15px", 
   left: "50%", 
   transform: "translateX(-50%)", 
   display: "flex", 
-  flexWrap: "nowrap", // 줄바꿈 금지
-  gap: "10px", // 간격 축소
-  background: "rgba(0,0,0,0.85)", 
-  padding: "6px 14px", 
+  flexWrap: "nowrap",
+  gap: "12px", 
+  background: "rgba(0,0,0,0.9)", 
+  padding: "8px 16px", 
   borderRadius: "30px", 
-  border: "1px solid #444", 
+  border: "1px solid #555", 
   zIndex: 5,
-  width: "auto",
-  maxWidth: "95vw", // 화면 밖으로 나가지 않게
-  justifyContent: "center"
+  maxWidth: "95vw"
 };
 
-const legendItem = { 
-  display: 'flex', 
-  alignItems: 'center', 
-  gap: '5px', // 간격 축소
-  color: '#fff', 
-  fontSize: '0.65rem', // 모바일 가독성을 위해 살짝 조절
-  fontWeight: 'bold',
-  whiteSpace: 'nowrap' // 텍스트 줄바꿈 방지
-};
-
-const dot = (color) => ({ width: "8px", height: "8px", borderRadius: "50%", background: color });
-const loadingStyle = { height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#00FF7F", background: "#000", fontWeight: "bold" };
+const legendItem = { display: 'flex', alignItems: 'center', gap: '6px', color: '#fff', fontSize: '0.7rem', fontWeight: 'bold', whiteSpace: 'nowrap' };
+const dot = (color) => ({ width: "10px", height: "10px", borderRadius: "50%", background: color });
+const loadingStyle = { height: "100vh", display: "flex", alignItems: "center", justifyContent: "center", color: "#00FF7F", background: "#000", fontWeight: "900", fontSize: "1.2rem" };
