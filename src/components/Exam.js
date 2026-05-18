@@ -21,6 +21,13 @@ const drpark_exam = [
         title: '"14th Bar Exam Committee Member"',
         publisher: 'Drafting Committee',
         year: '2025.1.'
+    },
+    {
+        id: 4,
+        name: 'https://www.drpark.kr/#/barpass_predictor',
+        title: '"Bar Exam First-Time Pass Predictor"',
+        publisher: 'for DALS students',
+        year: '2026.5.'
     }
 ]
 
