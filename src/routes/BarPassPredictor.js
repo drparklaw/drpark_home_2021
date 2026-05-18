@@ -162,7 +162,7 @@ export default function BarPassPredictor() {
       <div style={appWrapper}>
         <header style={headerPanel}>
           <div style={titleArea}>
-            <h2 style={titleText}>변시합격 확률예측 (Dong-A Law School)</h2>
+            <h2 style={titleText}>변시합격 확률예측 (DALS)</h2>
             {result.prob !== null && (
               <div style={{...probBadge, borderColor: result.prob > 0.8 ? '#00FF7F' : '#FF3030', color: result.prob > 0.8 ? '#00FF7F' : '#FF3030'}}>
                 {(result.prob * 100).toFixed(1)}%
