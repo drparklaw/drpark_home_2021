@@ -217,9 +217,9 @@ export default function BarPassPredictor() {
 
         <main style={{flex: 1, position:'relative'}}>
           <div style={topLegendBar}>
-            <div style={legendItem}><div style={dot('#00FF7F')}/> 합격군</div>
-            <div style={legendItem}><div style={dot('#007FFF')}/> 불합격군</div>
-            <div style={legendItem}><div style={{...dot('#FF0000'), boxShadow:'0 0 15px #FF0000'}}/> 내 위치</div>
+            <div style={legendItem}><div style={dot('#00FF7F')}/>합격군</div>
+            <div style={legendItem}><div style={dot('#007FFF')}/>불합격군</div>
+            <div style={legendItem}><div style={{...dot('#FF0000'), boxShadow:'0 0 15px #FF0000'}}/>내위치</div>
           </div>
 
           <Canvas dpr={[1, 2]} camera={{ position: [110, 90, 130], fov: 32 }}>
