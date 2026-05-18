@@ -183,7 +183,7 @@ export default function BarPassPredictor() {
           </div>
           
           <div style={inputGrid}>
-            {[["공법(40)", "gong"], ["형사(40)", "hyung"], ["민사(70)", "min"]].map(([label, key]) => (
+            {[["공객(40)", "gong"], ["형객(40)", "hyung"], ["민객(70)", "min"]].map(([label, key]) => (
               <div key={key} style={inputGroup}>
                 <label style={labelStyle}>{label}</label>
                 <input type="number" value={inputs[key]} onChange={e => setInputs({...inputs, [key]: e.target.value})} style={inputStyle} />
