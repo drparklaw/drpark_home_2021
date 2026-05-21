@@ -1,12 +1,12 @@
 import React, { useEffect, useMemo, useState, Suspense } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Center, GizmoHelper, GizmoViewport } from "@react-three/drei";
 import * as THREE from "three";
 
 /* =========================
-   STATISTICS & LOGIC
+STATISTICS & LOGIC
 ========================= */
-const MAX_SCORES = [40, 40, 70]; 
+const MAX_SCORES = [40, 40, 70];
 
 const vecDot = (v1, v2) => v1[0] * v2[0] + v1[1] * v2[1] + v1[2] * v2[2];
 const vecSub = (v1, v2) => [v1[0] - v2[0], v1[1] - v2[1], v1[2] - v2[2]];
@@ -44,7 +44,7 @@ function computeStats(points) {
   }
   for (let i = 0; i < 3; i++) {
     for (let j = 0; j < 3; j++) cov[i][j] = cov[i][j] / (n - 1);
-    cov[i][i] += 0.5; 
+    cov[i][i] += 0.5;
   }
   return { mean, cov };
 }
@@ -54,19 +54,19 @@ function solveRealisticModel(data, current) {
   const p1 = data.filter(d => d.pass === 1);
   const s0 = computeStats(p0);
   const s1 = computeStats(p1);
-  const pooledCov = s0.cov.map((row, i) => row.map((val, j) => (val + s1.cov[i][j]) / 2));
+  const pooledCov = s0.get ? null : s0.cov.map((row, i) => row.map((val, j) => (val + s1.cov[i][j]) / 2));
   const invCov = invert3x3(pooledCov);
-  let w = mul(invCov, vecSub(s1.mean, s0.mean)).map(v => Math.max(v, 0.08)); 
+  let w = mul(invCov, vecSub(s1.mean, s0.mean)).map(v => Math.max(v, 0.08));
   const midPoint = s0.mean.map((v, i) => (v + s1.mean[i]) / 2);
   const b = -vecDot(w, midPoint);
-  const logitScale = 0.5; 
+  const logitScale = 0.5;
   const logit = (vecDot(w, current) + b) * logitScale;
   const prob = 1 / (1 + Math.exp(-logit));
   return { w, b, prob, logitScale };
 }
 
 /* =========================
-   3D SHAPES
+3D SHAPES
 ========================= */
 const CHI95 = 7.815;
 function eigen3(A) {
@@ -113,33 +113,12 @@ function Ellipsoid({ data, isPass, color }) {
 }
 
 /* =========================
-   CAMERA TRACKER
-========================= */
-function CameraTracker({ onUpdate }) {
-  useFrame((state) => {
-    const p = state.camera.position;
-    const r = state.camera.rotation;
-    onUpdate({
-      pos: [p.x.toFixed(1), p.y.toFixed(1), p.z.toFixed(1)],
-      rot: [
-        THREE.MathUtils.radToDeg(r.x).toFixed(0),
-        THREE.MathUtils.radToDeg(r.y).toFixed(0),
-        THREE.MathUtils.radToDeg(r.z).toFixed(0)
-      ]
-    });
-  });
-  return null;
-}
-
-/* =========================
-   MAIN APP
+MAIN APP
 ========================= */
 export default function BarPassPredictor() {
   const [data, setData] = useState(null);
   const [inputs, setInputs] = useState({ gong: "30", hyung: "31", min: "38" });
   const [result, setResult] = useState({ prob: null, advice: "", customPoint: null });
-  // 초기 Y 위치 75.0 세팅 (+13 반영)
-  const [camInfo, setCamInfo] = useState({ pos: [-106.8, 75.0, 37.1], rot: [-34, -68, -32] });
 
   useEffect(() => {
     fetch("/model_3d_export.json")
@@ -159,18 +138,17 @@ export default function BarPassPredictor() {
     const current = [vGong, vHyung, vMin];
     const { w, b, prob, logitScale } = solveRealisticModel(data, current);
 
-    const TARGET_PROB = 0.90; 
-    const TARGET_LOGIT = Math.log(TARGET_PROB / (1 - TARGET_PROB)) / logitScale; 
+    const TARGET_PROB = 0.90;
+    const TARGET_LOGIT = Math.log(TARGET_PROB / (1 - TARGET_PROB)) / logitScale;
     let advice = "";
-    
     if (prob >= TARGET_PROB) {
-      advice = "축하합니다! 합격 확률 90% 이상의 최상위권입니다.";
+      advice = "축하합니다! 합격 확률 90% 이상의 최상위권입니다. 실수를 줄이는 방향으로 마무리하세요.";
     } else {
       const currentLogit = vecDot(w, current) + b;
       const needed = TARGET_LOGIT - currentLogit;
       const effortWeights = w.map((weight, i) => {
-          const lackRatio = (MAX_SCORES[i] - current[i]) / MAX_SCORES[i];
-          return weight * (0.5 + lackRatio); 
+        const lackRatio = (MAX_SCORES[i] - current[i]) / MAX_SCORES[i];
+        return weight * (0.5 + lackRatio);
       });
       const totalEffort = effortWeights.reduce((a, b) => a + b, 0);
       const rawDiffs = effortWeights.map((ew, i) => (needed * (ew / totalEffort)) / w[i]);
@@ -180,7 +158,7 @@ export default function BarPassPredictor() {
         if (prob < TARGET_PROB && finalD < 0.5 && maxPossible > 1) { finalD = 1.0; }
         return finalD >= 0.5 ? `+${finalD.toFixed(1)}` : "유지";
       });
-      advice = `[공법: ${formatted[0]}, 형사: ${formatted[1]}, 민사: ${formatted[2]}] 보완 시 90% 안정권 진입이 가능합니다.`;
+      advice = `[공법: ${formatted[0]}, 형사: ${formatted[1]}, 민사: ${formatted[2]}] 보완 시 합격 확률 90% 안정권 진입이 가능합니다.`;
     }
     setResult({ prob, advice, customPoint: current });
   };
@@ -194,15 +172,14 @@ export default function BarPassPredictor() {
           <div style={titleArea}>
             <h2 style={titleText}>변시 합격 예측 <span style={{color:'#00FF7F', fontSize:'0.7em'}}>DALS</span></h2>
             {result.prob !== null && (
-              <div style={{...probBadge, 
-                borderColor: result.prob > 0.8 ? '#00FF7F' : '#FF1A1A', 
+              <div style={{...probBadge,
+                borderColor: result.prob > 0.8 ? '#00FF7F' : '#FF1A1A',
                 color: result.prob > 0.8 ? '#00FF7F' : '#FF1A1A'
               }}>
                 {(result.prob * 100).toFixed(1)}%
               </div>
             )}
           </div>
-          
           <div style={inputGrid}>
             {[["공객(40)", "gong"], ["형객(40)", "hyung"], ["민객(70)", "min"]].map(([label, key]) => (
               <div key={key} style={inputGroup}>
@@ -228,20 +205,7 @@ export default function BarPassPredictor() {
             <div style={legendItem}><div style={{...dot('#FF0000'), boxShadow:'0 0 10px #FF0000'}}/> 내 위치</div>
           </div>
 
-          {/* 카메라 정보: 좌측 하단 */}
-          <div style={cameraInfoPanel}>
-             <div style={infoTitle}>LIVE CAMERA DATA</div>
-             <div style={infoRow}>
-                <span style={infoLabel}>POS</span>
-                <span style={infoValue}>X {camInfo.pos[0]} / Y {camInfo.pos[1]} / Z {camInfo.pos[2]}</span>
-             </div>
-             <div style={infoRow}>
-                <span style={infoLabel}>ROT</span>
-                <span style={infoValue}>X {camInfo.rot[0]}° / Y {camInfo.rot[1]}° / Z {camInfo.rot[2]}°</span>
-             </div>
-          </div>
-
-          {/* 조작 가이드: 우측 하단 배치 */}
+          {/* 조작 가이드: 왼쪽 하단 배치 (네비게이션 바 고려하여 bottom 40px) */}
           <div style={controlGuidePanel}>
             <div style={guideTitle}>NAVIGATE</div>
             <div style={guideItem}><span>ROTATE</span> 🖱️ L-Click / 👆 Touch</div>
@@ -249,16 +213,11 @@ export default function BarPassPredictor() {
             <div style={guideItem}><span>ZOOM</span> 🖱️ Wheel / 🤏 Pinch</div>
           </div>
 
-          <Canvas 
-            dpr={[1, 2]} 
-            /* Y축 위치 75.0 반영 */
+          <Canvas
+            dpr={[1, 2]}
+            /* 초기 카메라 위치 세팅: Y=75.0 반영 */
             camera={{ 
               position: [-106.8, 75.0, 37.1], 
-              rotation: [
-                THREE.MathUtils.degToRad(-34), 
-                THREE.MathUtils.degToRad(-68), 
-                THREE.MathUtils.degToRad(-32)
-              ],
               fov: 35 
             }}
             onCreated={({ camera }) => {
@@ -272,20 +231,17 @@ export default function BarPassPredictor() {
             style={{ width: '100%', height: '100%', touchAction: 'none' }}
           >
             <Suspense fallback={null}>
-              <CameraTracker onUpdate={setCamInfo} />
               <color attach="background" args={["#000"]} />
               <ambientLight intensity={0.8} />
               <pointLight position={[100, 100, 100]} intensity={3} />
-              
               <Center top>
                 <group>
-                  <gridHelper args={[140, 14, "#444", "#222"]} position={[20, 0, 35]} />
-                  
+                  <gridHelper args={[140, 14, "#888", "#444"]} position={[25, 0, 35]} />
                   {data.map((d, i) => (
                     <mesh key={i} position={[d.XGC, d.XHC, d.XMC]}>
                       <sphereGeometry args={[0.4, 8, 8]} />
-                      <meshStandardMaterial 
-                        color={d.pass === 1 ? "#00FF7F" : "#007FFF"} 
+                      <meshStandardMaterial
+                        color={d.pass === 1 ? "#00FF7F" : "#007FFF"}
                         emissive={d.pass === 1 ? "#00FF7F" : "#007FFF"}
                         emissiveIntensity={0.8}
                       />
@@ -307,8 +263,8 @@ export default function BarPassPredictor() {
                 </group>
               </Center>
 
-              {/* 기즈모: 조작 가이드 위에 위치하도록 마진 조정 */}
-              <GizmoHelper alignment="bottom-right" margin={[80, 220]}>
+              {/* 기즈모: 오른쪽 하단 배치 (네비게이션 바 고려하여 마진 조정) */}
+              <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
                 <GizmoViewport 
                   axisColors={['#FF4D4D', '#4DFF88', '#4D88FF']} 
                   labelColor="white" 
@@ -328,7 +284,7 @@ export default function BarPassPredictor() {
 }
 
 /* =========================
-   STYLING
+STYLING
 ========================= */
 const rootContainer = { width: "100vw", height: "100dvh", background: "#000", display: "flex", justifyContent: "center", overflow: "hidden" };
 const appWrapper = { width: "100%", maxWidth: "600px", height: "100%", display: "flex", flexDirection: "column", background: "#000", position: "relative" };
@@ -345,12 +301,7 @@ const adviceBox = { marginTop: "12px", padding: "12px", background: "#050505", b
 const topLegendBar = { position: "absolute", top: "15px", left: "50%", transform: "translateX(-50%)", display: "flex", flexWrap: "nowrap", gap: "12px", background: "rgba(0,0,0,0.9)", padding: "8px 16px", borderRadius: "30px", border: "1px solid #555", zIndex: 5, maxWidth: "95vw" };
 const legendItem = { display: 'flex', alignItems: 'center', gap: '6px', color: '#fff', fontSize: '0.7rem', fontWeight: 'bold', whiteSpace: 'nowrap' };
 const dot = (color) => ({ width: "10px", height: "10px", borderRadius: "50%", background: color });
-const cameraInfoPanel = { position: "absolute", bottom: "20px", left: "20px", background: "rgba(0, 0, 0, 0.8)", border: "1px solid rgba(0, 255, 127, 0.3)", padding: "10px 14px", borderRadius: "10px", zIndex: 5, pointerEvents: "none", fontFamily: "monospace" };
-const infoTitle = { fontSize: "0.6rem", color: "#00FF7F", fontWeight: "900", marginBottom: "6px", opacity: 0.8 };
-const infoRow = { display: "flex", gap: "10px", marginBottom: "2px" };
-const infoLabel = { fontSize: "0.65rem", color: "#888", width: "25px" };
-const infoValue = { fontSize: "0.7rem", color: "#fff", fontWeight: "500" };
-const controlGuidePanel = { position: "absolute", bottom: "20px", right: "20px", background: "rgba(0, 0, 0, 0.8)", border: "1px solid rgba(255,255,255,0.1)", padding: "12px 16px", borderRadius: "12px", zIndex: 5, pointerEvents: "none", display: "flex", flexDirection: "column", gap: "6px" };
+const controlGuidePanel = { position: "absolute", bottom: "40px", left: "20px", background: "rgba(0, 0, 0, 0.8)", border: "1px solid rgba(255,255,255,0.1)", padding: "12px 16px", borderRadius: "12px", zIndex: 5, pointerEvents: "none", display: "flex", flexDirection: "column", gap: "6px" };
 const guideTitle = { fontSize: "0.6rem", color: "#00FF7F", fontWeight: "900", letterSpacing: "1px", marginBottom: "4px", opacity: 0.8 };
 const guideItem = { display: "flex", justifyContent: "space-between", alignItems: "center", gap: "15px", color: "#fff", fontSize: "0.65rem", fontWeight: "500" };
 const loadingStyle = { height: "100dvh", display: "flex", alignItems: "center", justifyContent: "center", color: "#00FF7F", background: "#000", fontWeight: "900", fontSize: "1.2rem" };
