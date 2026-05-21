@@ -205,7 +205,7 @@ export default function BarPassPredictor() {
             <div style={legendItem}><div style={{...dot('#FF0000'), boxShadow:'0 0 10px #FF0000'}}/> 내 위치</div>
           </div>
 
-          {/* 조작 가이드: 왼쪽 하단 배치 (네비게이션 바 고려하여 bottom 40px) */}
+          {/* 조작 가이드: 위치를 상향 조정 (bottom 40px -> 100px) */}
           <div style={controlGuidePanel}>
             <div style={guideTitle}>NAVIGATE</div>
             <div style={guideItem}><span>ROTATE</span> 🖱️ L-Click / 👆 Touch</div>
@@ -215,7 +215,6 @@ export default function BarPassPredictor() {
 
           <Canvas
             dpr={[1, 2]}
-            /* 초기 카메라 위치 세팅: Y=75.0 반영 */
             camera={{ 
               position: [-106.8, 75.0, 37.1], 
               fov: 35 
@@ -263,8 +262,8 @@ export default function BarPassPredictor() {
                 </group>
               </Center>
 
-              {/* 기즈모: 오른쪽 하단 배치 (네비게이션 바 고려하여 마진 조정) */}
-              <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
+              {/* 3축 기즈모: 위치를 상향 조정 (margin bottom 80 -> 140) */}
+              <GizmoHelper alignment="bottom-right" margin={[80, 140]}>
                 <GizmoViewport 
                   axisColors={['#FF4D4D', '#4DFF88', '#4D88FF']} 
                   labelColor="white" 
@@ -301,7 +300,10 @@ const adviceBox = { marginTop: "12px", padding: "12px", background: "#050505", b
 const topLegendBar = { position: "absolute", top: "15px", left: "50%", transform: "translateX(-50%)", display: "flex", flexWrap: "nowrap", gap: "12px", background: "rgba(0,0,0,0.9)", padding: "8px 16px", borderRadius: "30px", border: "1px solid #555", zIndex: 5, maxWidth: "95vw" };
 const legendItem = { display: 'flex', alignItems: 'center', gap: '6px', color: '#fff', fontSize: '0.7rem', fontWeight: 'bold', whiteSpace: 'nowrap' };
 const dot = (color) => ({ width: "10px", height: "10px", borderRadius: "50%", background: color });
-const controlGuidePanel = { position: "absolute", bottom: "40px", left: "20px", background: "rgba(0, 0, 0, 0.8)", border: "1px solid rgba(255,255,255,0.1)", padding: "12px 16px", borderRadius: "12px", zIndex: 5, pointerEvents: "none", display: "flex", flexDirection: "column", gap: "6px" };
+
+// bottom 값을 40px에서 100px로 올려 하단 버튼과의 간섭 방지
+const controlGuidePanel = { position: "absolute", bottom: "100px", left: "20px", background: "rgba(0, 0, 0, 0.8)", border: "1px solid rgba(255,255,255,0.1)", padding: "12px 16px", borderRadius: "12px", zIndex: 5, pointerEvents: "none", display: "flex", flexDirection: "column", gap: "6px" };
+
 const guideTitle = { fontSize: "0.6rem", color: "#00FF7F", fontWeight: "900", letterSpacing: "1px", marginBottom: "4px", opacity: 0.8 };
 const guideItem = { display: "flex", justifyContent: "space-between", alignItems: "center", gap: "15px", color: "#fff", fontSize: "0.65rem", fontWeight: "500" };
 const loadingStyle = { height: "100dvh", display: "flex", alignItems: "center", justifyContent: "center", color: "#00FF7F", background: "#000", fontWeight: "900", fontSize: "1.2rem" };
