@@ -104,7 +104,8 @@ function LegalDictionary() {
   return (
     <div className="ld-container">
       <div className="ld-search-wrapper">
-        <h1 className="ld-logo">법률용어찾기 ... 🚧 공사중 </h1>
+        <h1 className="ld-logo">법률용어찾기</h1>
+        <h1>🚧 테스트 중입니다 🚧</h1>
 
         {/* 추천 리스트 배치를 위한 wrapper 구조 */}
         <div className="ld-search-box-container" ref={suggestionRef} style={{ position: "relative" }}>

@@ -213,7 +213,7 @@ const drpark_papers = [
     },                                    
     {
         id: 22,
-        name: '🌟게재예정🌟 박봉철',
+        name: '⭐️(게재예정) 박봉철',
         title: '"변호사의 인공지능 광고 규제에 관한 소고"',
         journal: '강원법학 제83권',
         institute: '강원대학교 비교법학연구소',
