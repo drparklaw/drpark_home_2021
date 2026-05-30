@@ -4,7 +4,7 @@ import './css/styles.css';
 import { HashRouter, Route } from 'react-router-dom';
 
 import About from './routes/About';
-//import LegalDictionary from './routes/LegalDictionary';
+import LegalDictionary from './routes/LegalDictionary';
 import BarPassPredictor from './routes/BarPassPredictor';
 
 import Navigation from './components/Navigation';
@@ -25,6 +25,12 @@ function App() {
         path="/legal_dictionary"
         component={LegalDictionary}
       /> */}
+
+      <Route
+        path="/legal_dictionary"
+        component={LegalDictionary}
+      />
+
 
       <Route
         path="/barpass_predictor"
