@@ -156,14 +156,7 @@ function LegalDictionary() {
           ) : (
             results.map((item, idx) => (
               <div className="ld-card" key={idx}>
-                {item.image && (
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="ld-image"
-                    onClick={() => setSelectedImage(item.image)}
-                  />
-                )}
+
 
                 <div className="ld-content">
                   <h2 className="ld-title">{item.name}</h2>
@@ -179,6 +172,16 @@ function LegalDictionary() {
                     <div>{item.example}</div>
                   </div>
                 </div>
+
+                {item.image && (
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="ld-image"
+                    onClick={() => setSelectedImage(item.image)}
+                  />
+                )}
+                
               </div>
             ))
           )}
