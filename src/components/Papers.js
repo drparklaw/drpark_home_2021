@@ -168,8 +168,8 @@ const drpark_papers = [
         journal: '강원법학 제83권',
         institute: '강원대학교 비교법학연구소',
         year: '2026.5',
-        page: 'pp.-',
-        pic: ''
+        page: 'pp.265-294',
+        pic: 'ai_ads_attorney(2026).png'
     }
 ]
 
