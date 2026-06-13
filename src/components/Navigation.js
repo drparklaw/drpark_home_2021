@@ -14,9 +14,11 @@ function Navigation() {
                 법률용어찾기
             </Link>
 
+            {/* 
             <Link to="/barpass_predictor">
                 변시합격예측
             </Link>
+                */}
         </div>
     );
 }

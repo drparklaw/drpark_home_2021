@@ -31,12 +31,13 @@ function App() {
         component={LegalDictionary}
       />
 
-
+      {/*
       <Route
         path="/barpass_predictor"
         component={BarPassPredictor}
       />
-
+      */}
+        
     </HashRouter>
   );
 }

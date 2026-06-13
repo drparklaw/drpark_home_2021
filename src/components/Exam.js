@@ -24,9 +24,9 @@ const drpark_exam = [
     },
     {
         id: 4,
-        name: 'https://www.drpark.kr/#/barpass_predictor',
-        title: '"Bar Exam First-Time Pass Predictor"',
-        publisher: 'for DALS students',
+        name: 'DALS Student Advising Center',
+        title: '"Bar Exam Pass Predictor"',
+        publisher: 'Based on Practice Exam Multiple-Choice',
         year: '2026.5.'
     }
 ]
