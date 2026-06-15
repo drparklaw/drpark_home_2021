@@ -26,7 +26,7 @@ const drpark_exam = [
         id: 4,
         name: 'DALS Student Advising Center',
         title: '"Bar Exam Pass Predictor"',
-        publisher: 'Based on Practice Exam Multiple-Choice',
+        publisher: 'Based on Practice Exam Scores',
         year: '2026.5.'
     }
 ]
