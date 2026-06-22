@@ -178,7 +178,7 @@ const drpark_papers = [
         journal: '법학연구 제29집 제2호',
         institute: '인하대학교 법학연구소',
         year: '2026.6',
-        page: 'pp.-',
+        page: 'pp.253-282',
         pic: '악의점유_선의수익(2026).png'
     }
 ]
