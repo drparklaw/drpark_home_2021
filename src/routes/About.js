@@ -8,6 +8,7 @@ import Exam from '../components/Exam';
 import Papers from '../components/Papers';
 import Industry from '../components/Industry';
 //import VisitorCounter from '../components/VisitorCounter';
+import ScoreGenerator from '../components/ScoreGenerator';
 
 
 

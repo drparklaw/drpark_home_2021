@@ -8,6 +8,7 @@ import LegalDictionary from './routes/LegalDictionary';
 import BarPassPredictor from './routes/BarPassPredictor';
 
 import Navigation from './components/Navigation';
+import ScoreGenerator from './component/ScoreGenerator';
 
 function App() {
   return (
@@ -34,6 +35,12 @@ function App() {
       <Route
         path="/barpass_predictor"
         component={BarPassPredictor}
+      />
+
+
+      <Route
+        path="/score_generator"
+        component={ScoreGenerator}
       />
 
         

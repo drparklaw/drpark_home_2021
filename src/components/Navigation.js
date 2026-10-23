@@ -18,6 +18,11 @@ function Navigation() {
             <Link to="/barpass_predictor">
                 변시합격예측
             </Link>
+
+            <Link to="/score_generator">
+                숫자발생기
+            </Link>
+
   
         </div>
     );
