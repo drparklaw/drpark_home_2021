@@ -1,21 +1,73 @@
 import React, { useMemo, useState } from 'react';
 
 const LEVELS = ['상', '중', '하'];
-const CRITERIA = ['평가영역 1', '평가영역 2', '평가영역 3', '평가영역 4', '평가영역 5'];
+
+const CRITERIA = [
+  '평가영역 1',
+  '평가영역 2',
+  '평가영역 3',
+  '평가영역 4',
+  '평가영역 5',
+];
+
+// 등급별 평가영역 상/중/하 조합
+// ※ 현재는 테스트용 기본값
 const DEFAULT_COMBINATIONS = {
-  1: ['상', '상', '상', '상', '상'],
-  2: ['상', '상', '상', '상', '상'],
+  1: ['상', '상', '상', '중', '상'],
+  2: ['상', '상', '중', '중', '상'],
   3: ['중', '중', '중', '중', '중'],
-  4: ['하', '하', '하', '하', '하'],
-  5: ['하', '하', '하', '하', '하'],
+  4: ['중', '하', '하', '중', '하'],
+  5: ['하', '하', '중', '하', '중'],
 };
-const EMPTY_RANGES = Object.fromEntries(CRITERIA.map((_, i) => [i, {
-  상: { min: '', max: '' }, 중: { min: '', max: '' }, 하: { min: '', max: '' },
-}]));
+
+// 점수 구간 기본값
+// ※ 현재는 테스트용 기본값
+// 각 평가영역마다 상/중/하의 범위를 따로 설정할 수 있음
+const DEFAULT_RANGES = {
+  0: {
+    상: { min: 85, max: 100 },
+    중: { min: 70, max: 84 },
+    하: { min: 50, max: 69 },
+  },
+  1: {
+    상: { min: 85, max: 100 },
+    중: { min: 70, max: 84 },
+    하: { min: 50, max: 69 },
+  },
+  2: {
+    상: { min: 85, max: 100 },
+    중: { min: 70, max: 84 },
+    하: { min: 50, max: 69 },
+  },
+  3: {
+    상: { min: 85, max: 100 },
+    중: { min: 70, max: 84 },
+    하: { min: 50, max: 69 },
+  },
+  4: {
+    상: { min: 85, max: 100 },
+    중: { min: 70, max: 84 },
+    하: { min: 50, max: 69 },
+  },
+};
 
 function parseGrades(raw) {
-  return raw.split(/[\s,;]+/).filter(Boolean).map((value) => {
-    if (!/^[1-5]$/.test(value)) throw new Error(`등급은 1~5의 숫자여야 합니다. 확인할 값: ${value}`);
+  const values = raw
+    .split(/[\s,;]+/)
+    .map((value) => value.trim())
+    .filter(Boolean);
+
+  if (!values.length) {
+    throw new Error('등급을 한 명 이상 입력하세요.');
+  }
+
+  return values.map((value, index) => {
+    if (!/^[1-5]$/.test(value)) {
+      throw new Error(
+        `${index + 1}번째 값 '${value}'이(가) 잘못되었습니다. 등급은 1~5의 숫자만 입력하세요.`
+      );
+    }
+
     return Number(value);
   });
 }
@@ -26,48 +78,117 @@ function randomInteger(min, max) {
 
 export default function ScoreGenerator() {
   const [gradeText, setGradeText] = useState('');
-  const [combinations, setCombinations] = useState(DEFAULT_COMBINATIONS);
-  const [ranges, setRanges] = useState(EMPTY_RANGES);
+
+  const [combinations, setCombinations] = useState(
+    DEFAULT_COMBINATIONS
+  );
+
+  const [ranges, setRanges] = useState(DEFAULT_RANGES);
+
   const [result, setResult] = useState('');
-  const [message, setMessage] = useState('등급 목록을 붙여넣고 점수 구간을 입력한 뒤 점수를 생성하세요.');
+
+  const [message, setMessage] = useState(
+    '학생 등급을 붙여넣고 점수를 생성하세요.'
+  );
+
   const [error, setError] = useState('');
+
   const grades = useMemo(() => {
-    try { return parseGrades(gradeText); } catch { return []; }
+    if (!gradeText.trim()) {
+      return [];
+    }
+
+    try {
+      return parseGrades(gradeText);
+    } catch {
+      return [];
+    }
   }, [gradeText]);
 
+  // 등급별 상/중/하 조합 변경
   function updateLevel(grade, criterion, level) {
     setCombinations((current) => ({
       ...current,
-      [grade]: current[grade].map((value, index) => index === criterion ? level : value),
+      [grade]: current[grade].map((value, index) =>
+        index === criterion ? level : value
+      ),
     }));
   }
 
+  // 점수 범위 변경
   function updateRange(criterion, level, edge, value) {
     setRanges((current) => ({
       ...current,
-      [criterion]: { ...current[criterion], [level]: { ...current[criterion][level], [edge]: value } },
+      [criterion]: {
+        ...current[criterion],
+        [level]: {
+          ...current[criterion][level],
+          [edge]: value,
+        },
+      },
     }));
   }
 
+  // 점수 생성
   function generate() {
     setError('');
+
     try {
       const parsed = parseGrades(gradeText);
-      if (!parsed.length) throw new Error('등급을 한 명 이상 입력하세요.');
-      const checked = CRITERIA.map((_, criterion) => Object.fromEntries(LEVELS.map((level) => {
-        const min = Number(row[level].min);
-        const max = Number(row[level].max);
-        if (row[level].min === '' || row[level].max === '' || !Number.isInteger(min) || !Number.isInteger(max) || min > max) {
-          throw new Error(`${CRITERIA[criterion]}의 '${level}' 점수 구간을 확인하세요. 시작값과 끝값은 정수이고 시작값이 끝값 이하여야 합니다.`);
-        }
-        return [level, { min, max }];
-      })));
-      const rows = parsed.map((grade) => combinations[grade].map((level, criterion) => {
-        const { min, max } = checked[criterion][level];
-        return randomInteger(min, max);
-      }));
-      setResult(rows.map((row) => row.join('\t')).join('\n'));
-      setMessage(`${parsed.length}명의 점수를 생성했습니다. 각 점수는 선택한 구간에서 동일한 확률로 정수 생성됩니다.`);
+
+      // 모든 점수 구간 확인
+      const checked = CRITERIA.map((_, criterion) =>
+        Object.fromEntries(
+          LEVELS.map((level) => {
+            const range = ranges[criterion][level];
+
+            const min = Number(range.min);
+            const max = Number(range.max);
+
+            if (
+              range.min === '' ||
+              range.max === '' ||
+              !Number.isInteger(min) ||
+              !Number.isInteger(max) ||
+              min > max
+            ) {
+              throw new Error(
+                `${CRITERIA[criterion]}의 '${level}' 점수 구간을 확인하세요.`
+              );
+            }
+
+            return [
+              level,
+              {
+                min,
+                max,
+              },
+            ];
+          })
+        )
+      );
+
+      // 학생별 점수 생성
+      const rows = parsed.map((grade) => {
+        const combination = combinations[grade];
+
+        return combination.map((level, criterion) => {
+          const { min, max } = checked[criterion][level];
+
+          return randomInteger(min, max);
+        });
+      });
+
+      // 탭으로 구분해서 Excel에 바로 붙여넣을 수 있도록 생성
+      const output = rows
+        .map((row) => row.join('\t'))
+        .join('\n');
+
+      setResult(output);
+
+      setMessage(
+        `${parsed.length}명의 점수를 생성했습니다.`
+      );
     } catch (e) {
       setError(e.message);
       setResult('');
@@ -75,73 +196,506 @@ export default function ScoreGenerator() {
     }
   }
 
+  // 다시 랜덤 생성
+  function regenerate() {
+    if (!gradeText.trim()) {
+      setError('먼저 학생 등급을 입력하세요.');
+      return;
+    }
+
+    generate();
+  }
+
+  // 결과 복사
   async function copyResult() {
-    if (!result) return;
+    if (!result) {
+      setError('먼저 점수를 생성하세요.');
+      return;
+    }
+
     try {
       await navigator.clipboard.writeText(result);
-      setMessage('결과를 복사했습니다. 엑셀에서 붙여넣으세요.');
+      setMessage('생성된 점수를 클립보드에 복사했습니다.');
+      setError('');
     } catch {
-      setError('자동 복사를 사용할 수 없습니다. 결과 상자 내용을 선택해 복사하세요.');
+      setError(
+        '자동 복사에 실패했습니다. 결과창을 클릭한 뒤 직접 복사해 주세요.'
+      );
     }
   }
 
-  const inputStyle = { width: '100%', boxSizing: 'border-box', padding: '8px 10px', border: '1px solid #cbd5e1', borderRadius: 7, fontSize: 14 };
-  const cardStyle = { background: '#fff', border: '1px solid #e2e8f0', borderRadius: 12, padding: 20, marginBottom: 18 };
-  const buttonStyle = { border: 0, borderRadius: 8, padding: '10px 16px', fontWeight: 700, cursor: 'pointer', background: '#2563eb', color: '#fff' };
+  // 전체 초기화
+  function clearAll() {
+    setGradeText('');
+    setResult('');
+    setError('');
+    setMessage('학생 등급을 붙여넣고 점수를 생성하세요.');
+
+    setCombinations(DEFAULT_COMBINATIONS);
+    setRanges(DEFAULT_RANGES);
+  }
 
   return (
-    <main style={{ maxWidth: 1100, margin: '0 auto', padding: '28px 18px', color: '#0f172a', fontFamily: 'system-ui, sans-serif' }}>
-      <h1 style={{ margin: '0 0 8px', fontSize: 28 }}>엑셀 점수 자동 생성</h1>
-      <p style={{ color: '#475569', marginTop: 0 }}>등급별 5개 평가영역의 상·중·하 조합과 점수 구간에 따라 점수를 무작위로 생성합니다.</p>
+    <div
+      style={{
+        maxWidth: '1100px',
+        margin: '40px auto',
+        padding: '0 20px 60px',
+        fontFamily:
+          '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+        color: '#222',
+      }}
+    >
+      <h1
+        style={{
+          fontSize: '28px',
+          marginBottom: '8px',
+        }}
+      >
+        학생 평가점수 생성기
+      </h1>
 
-      <section style={cardStyle}>
-        <h2 style={{ fontSize: 18, marginTop: 0 }}>1. 등급별 평가영역 조합</h2>
-        <p style={{ color: '#64748b', fontSize: 13 }}>아래 기본값은 예시입니다. 실제 기준에 맞게 각 칸을 수정하세요.</p>
-        <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 650 }}>
-          <thead><tr><th style={th}>등급</th>{CRITERIA.map((name) => <th key={name} style={th}>{name}</th>)}</tr></thead>
-          <tbody>{[1, 2, 3, 4, 5].map((grade) => <tr key={grade}><th style={td}>{grade}등급</th>{CRITERIA.map((_, criterion) => <td style={td} key={criterion}>
-            <select aria-label={`${grade}등급 ${criterion + 1}영역`} value={combinations[grade][criterion]} onChange={(e) => updateLevel(grade, criterion, e.target.value)} style={inputStyle}>
-              {LEVELS.map((level) => <option key={level}>{level}</option>)}
-            </select>
-          </td>)}</tr>)}</tbody>
-        </table></div>
+      <p
+        style={{
+          color: '#666',
+          marginBottom: '30px',
+        }}
+      >
+        이미 결정된 1~5등급을 기준으로 각 평가영역의 점수를 무작위로 생성합니다.
+      </p>
+
+      {/* 1. 등급별 조합 */}
+      <section
+        style={{
+          border: '1px solid #ddd',
+          borderRadius: '10px',
+          padding: '20px',
+          marginBottom: '25px',
+          background: '#fff',
+        }}
+      >
+        <h2
+          style={{
+            fontSize: '20px',
+            marginTop: 0,
+            marginBottom: '15px',
+          }}
+        >
+          1. 등급별 평가영역 조합
+        </h2>
+
+        <div style={{ overflowX: 'auto' }}>
+          <table
+            style={{
+              width: '100%',
+              borderCollapse: 'collapse',
+              minWidth: '700px',
+            }}
+          >
+            <thead>
+              <tr>
+                <th style={thStyle}>등급</th>
+
+                {CRITERIA.map((criterion) => (
+                  <th key={criterion} style={thStyle}>
+                    {criterion}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+
+            <tbody>
+              {[1, 2, 3, 4, 5].map((grade) => (
+                <tr key={grade}>
+                  <td style={tdStyle}>
+                    <strong>{grade}등급</strong>
+                  </td>
+
+                  {CRITERIA.map((_, criterion) => (
+                    <td key={criterion} style={tdStyle}>
+                      <select
+                        value={combinations[grade][criterion]}
+                        onChange={(e) =>
+                          updateLevel(
+                            grade,
+                            criterion,
+                            e.target.value
+                          )
+                        }
+                        style={selectStyle}
+                      >
+                        {LEVELS.map((level) => (
+                          <option key={level} value={level}>
+                            {level}
+                          </option>
+                        ))}
+                      </select>
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </section>
 
-      <section style={cardStyle}>
-        <h2 style={{ fontSize: 18, marginTop: 0 }}>2. 영역별 상·중·하 점수 구간</h2>
-        <p style={{ color: '#64748b', fontSize: 13 }}>시작점과 끝점 모두 포함합니다. 예: 18~20이면 18, 19, 20 중 하나를 생성합니다.</p>
-        <div style={{ overflowX: 'auto' }}><table style={{ width: '100%', borderCollapse: 'collapse', minWidth: 700 }}>
-          <thead><tr><th style={th}>평가영역</th>{LEVELS.map((level) => <th key={level} style={th}>{level} (시작 ~ 끝)</th>)}</tr></thead>
-          <tbody>{CRITERIA.map((name, criterion) => <tr key={name}><th style={td}>{name}</th>{LEVELS.map((level) => <td style={td} key={level}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-              <input aria-label={`${name} ${level} 시작 점수`} type="number" step="1" value={ranges[criterion][level].min} onChange={(e) => updateRange(criterion, level, 'min', e.target.value)} placeholder="시작" style={inputStyle} />
-              <span>~</span>
-              <input aria-label={`${name} ${level} 끝 점수`} type="number" step="1" value={ranges[criterion][level].max} onChange={(e) => updateRange(criterion, level, 'max', e.target.value)} placeholder="끝" style={inputStyle} />
-            </div>
-          </td>)}</tr>)}</tbody>
-        </table></div>
+      {/* 2. 점수 구간 */}
+      <section
+        style={{
+          border: '1px solid #ddd',
+          borderRadius: '10px',
+          padding: '20px',
+          marginBottom: '25px',
+          background: '#fff',
+        }}
+      >
+        <h2
+          style={{
+            fontSize: '20px',
+            marginTop: 0,
+            marginBottom: '8px',
+          }}
+        >
+          2. 평가영역별 점수 구간
+        </h2>
+
+        <p
+          style={{
+            color: '#777',
+            fontSize: '14px',
+            marginBottom: '18px',
+          }}
+        >
+          현재는 테스트용으로 상 85~100, 중 70~84, 하 50~69를
+          입력해 두었습니다.
+        </p>
+
+        <div style={{ overflowX: 'auto' }}>
+          <table
+            style={{
+              width: '100%',
+              borderCollapse: 'collapse',
+              minWidth: '800px',
+            }}
+          >
+            <thead>
+              <tr>
+                <th style={thStyle}>평가영역</th>
+                <th style={thStyle}>상</th>
+                <th style={thStyle}>중</th>
+                <th style={thStyle}>하</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {CRITERIA.map((criterion, criterionIndex) => (
+                <tr key={criterion}>
+                  <td style={tdStyle}>
+                    <strong>{criterion}</strong>
+                  </td>
+
+                  {LEVELS.map((level) => (
+                    <td key={level} style={tdStyle}>
+                      <div
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '6px',
+                          justifyContent: 'center',
+                        }}
+                      >
+                        <input
+                          type="number"
+                          value={
+                            ranges[criterionIndex][level].min
+                          }
+                          onChange={(e) =>
+                            updateRange(
+                              criterionIndex,
+                              level,
+                              'min',
+                              e.target.value
+                            )
+                          }
+                          style={numberInputStyle}
+                        />
+
+                        <span>~</span>
+
+                        <input
+                          type="number"
+                          value={
+                            ranges[criterionIndex][level].max
+                          }
+                          onChange={(e) =>
+                            updateRange(
+                              criterionIndex,
+                              level,
+                              'max',
+                              e.target.value
+                            )
+                          }
+                          style={numberInputStyle}
+                        />
+                      </div>
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </section>
 
-      <section style={cardStyle}>
-        <h2 style={{ fontSize: 18, marginTop: 0 }}>3. 학생 등급 붙여넣기</h2>
-        <p style={{ color: '#64748b', fontSize: 13 }}>엑셀에서 등급 열을 복사해 붙여넣으세요. 한 줄에 하나씩 또는 탭으로 구분된 값 모두 지원합니다.</p>
-        <textarea value={gradeText} onChange={(e) => setGradeText(e.target.value)} rows={7} placeholder={'1\n2\n3\n4\n5'} style={{ ...inputStyle, resize: 'vertical', fontFamily: 'monospace' }} />
-        <div style={{ marginTop: 8, color: grades.length ? '#475569' : '#64748b', fontSize: 13 }}>{grades.length ? `${grades.length}개 등급을 확인했습니다.` : '등급을 입력하면 학생 수가 여기에 표시됩니다.'}</div>
+      {/* 3. 등급 입력 */}
+      <section
+        style={{
+          border: '1px solid #ddd',
+          borderRadius: '10px',
+          padding: '20px',
+          marginBottom: '25px',
+          background: '#fff',
+        }}
+      >
+        <h2
+          style={{
+            fontSize: '20px',
+            marginTop: 0,
+            marginBottom: '8px',
+          }}
+        >
+          3. 학생 등급 입력
+        </h2>
+
+        <p
+          style={{
+            color: '#777',
+            fontSize: '14px',
+            marginBottom: '12px',
+          }}
+        >
+          Excel에서 1~5등급을 그대로 복사해서 붙여넣으세요.
+          한 줄에 한 명씩 입력해도 되고, 공백이나 쉼표로 구분해도 됩니다.
+        </p>
+
+        <textarea
+          value={gradeText}
+          onChange={(e) => {
+            setGradeText(e.target.value);
+            setError('');
+          }}
+          placeholder={`예시:
+1
+2
+3
+2
+5
+1
+4
+3`}
+          style={{
+            width: '100%',
+            minHeight: '180px',
+            boxSizing: 'border-box',
+            padding: '12px',
+            border: '1px solid #ccc',
+            borderRadius: '6px',
+            fontSize: '15px',
+            lineHeight: '1.6',
+            resize: 'vertical',
+          }}
+        />
+
+        <div
+          style={{
+            marginTop: '10px',
+            fontSize: '14px',
+            color: '#555',
+          }}
+        >
+          현재 인식된 학생 수:{' '}
+          <strong>{grades.length}명</strong>
+        </div>
       </section>
 
-      <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', marginBottom: 18 }}>
-        <button type="button" onClick={generate} style={buttonStyle}>점수 생성 / 다시 생성</button>
-        <button type="button" onClick={copyResult} disabled={!result} style={{ ...buttonStyle, background: result ? '#0f766e' : '#94a3b8', cursor: result ? 'pointer' : 'not-allowed' }}>결과 복사</button>
-      </div>
-      {(message || error) && <p role={error ? 'alert' : 'status'} style={{ color: error ? '#b91c1c' : '#334155' }}>{error || message}</p>}
-      <section style={cardStyle}>
-        <h2 style={{ fontSize: 18, marginTop: 0 }}>엑셀 붙여넣기 결과 (5열)</h2>
-        <p style={{ color: '#64748b', fontSize: 13 }}>결과는 학생 입력 순서를 유지하며 탭으로 5개 영역을 구분합니다. 학생 이름이나 등급 열이 필요하면 엑셀에서 결과를 해당 열 옆에 붙여넣으세요.</p>
-        <textarea readOnly value={result} rows={10} placeholder="점수 생성 후 결과가 여기에 표시됩니다." style={{ ...inputStyle, resize: 'vertical', fontFamily: 'monospace' }} />
+      {/* 버튼 */}
+      <section
+        style={{
+          display: 'flex',
+          gap: '10px',
+          flexWrap: 'wrap',
+          marginBottom: '25px',
+        }}
+      >
+        <button
+          onClick={generate}
+          style={primaryButtonStyle}
+        >
+          점수 생성
+        </button>
+
+        <button
+          onClick={regenerate}
+          style={secondaryButtonStyle}
+        >
+          다시 랜덤 생성
+        </button>
+
+        <button
+          onClick={copyResult}
+          style={secondaryButtonStyle}
+        >
+          결과 복사
+        </button>
+
+        <button
+          onClick={clearAll}
+          style={dangerButtonStyle}
+        >
+          초기화
+        </button>
       </section>
-    </main>
+
+      {/* 메시지 */}
+      {message && (
+        <div
+          style={{
+            padding: '12px 15px',
+            background: '#f5f7fa',
+            borderRadius: '6px',
+            marginBottom: '10px',
+            color: '#444',
+          }}
+        >
+          {message}
+        </div>
+      )}
+
+      {error && (
+        <div
+          style={{
+            padding: '12px 15px',
+            background: '#fff1f1',
+            border: '1px solid #f0b5b5',
+            borderRadius: '6px',
+            marginBottom: '10px',
+            color: '#c62828',
+          }}
+        >
+          {error}
+        </div>
+      )}
+
+      {/* 4. 결과 */}
+      <section
+        style={{
+          border: '1px solid #ddd',
+          borderRadius: '10px',
+          padding: '20px',
+          background: '#fff',
+        }}
+      >
+        <h2
+          style={{
+            fontSize: '20px',
+            marginTop: 0,
+            marginBottom: '8px',
+          }}
+        >
+          4. 생성 결과
+        </h2>
+
+        <p
+          style={{
+            color: '#777',
+            fontSize: '14px',
+            marginBottom: '12px',
+          }}
+        >
+          점수는 평가영역 1~5 순서로 생성됩니다.
+          각 점수 사이에는 탭(tab)이 들어가 있으므로 Excel에 그대로 붙여넣으면
+          5개 열로 나뉩니다.
+        </p>
+
+        <textarea
+          value={result}
+          readOnly
+          placeholder="여기에 생성된 점수가 표시됩니다."
+          style={{
+            width: '100%',
+            minHeight: '300px',
+            boxSizing: 'border-box',
+            padding: '12px',
+            border: '1px solid #ccc',
+            borderRadius: '6px',
+            fontSize: '14px',
+            lineHeight: '1.6',
+            fontFamily: 'Menlo, Monaco, Consolas, monospace',
+            resize: 'vertical',
+          }}
+        />
+      </section>
+    </div>
   );
 }
 
-const th = { borderBottom: '2px solid #cbd5e1', padding: '10px 8px', textAlign: 'left', fontSize: 13 };
-const td = { borderBottom: '1px solid #e2e8f0', padding: '8px', textAlign: 'left' };
+const thStyle = {
+  border: '1px solid #ddd',
+  padding: '10px',
+  background: '#f5f6f8',
+  textAlign: 'center',
+  fontWeight: 600,
+};
+
+const tdStyle = {
+  border: '1px solid #ddd',
+  padding: '10px',
+  textAlign: 'center',
+};
+
+const selectStyle = {
+  padding: '6px 10px',
+  border: '1px solid #ccc',
+  borderRadius: '5px',
+  fontSize: '14px',
+};
+
+const numberInputStyle = {
+  width: '70px',
+  padding: '7px',
+  border: '1px solid #ccc',
+  borderRadius: '5px',
+  textAlign: 'center',
+  fontSize: '14px',
+};
+
+const primaryButtonStyle = {
+  padding: '11px 20px',
+  border: 'none',
+  borderRadius: '6px',
+  background: '#1f2937',
+  color: '#fff',
+  fontSize: '15px',
+  fontWeight: 600,
+  cursor: 'pointer',
+};
+
+const secondaryButtonStyle = {
+  padding: '11px 20px',
+  border: '1px solid #ccc',
+  borderRadius: '6px',
+  background: '#fff',
+  color: '#333',
+  fontSize: '15px',
+  cursor: 'pointer',
+};
+
+const dangerButtonStyle = {
+  padding: '11px 20px',
+  border: '1px solid #ddd',
+  borderRadius: '6px',
+  background: '#fafafa',
+  color: '#777',
+  fontSize: '15px',
+  cursor: 'pointer',
+};

@@ -8,7 +8,9 @@ import LegalDictionary from './routes/LegalDictionary';
 import BarPassPredictor from './routes/BarPassPredictor';
 
 import Navigation from './components/Navigation';
-import ScoreGenerator from './component/ScoreGenerator';
+
+import ScoreGenerator from './components/ScoreGenerator';
+
 
 function App() {
   return (
