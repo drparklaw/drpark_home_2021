@@ -19,9 +19,9 @@ function Navigation() {
                 변시합격예측
             </Link>
 
-            <Link to="/score_generator">
+            {/* <Link to="/score_generator">
                 숫자발생기
-            </Link>
+            </Link> */}
 
   
         </div>
